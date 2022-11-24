@@ -16,7 +16,7 @@ const ModalForm = ({
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 800,
+    width: 400,
     bgcolor: 'background.paper',
     border: '2px solid #eee',
     boxShadow: 2,
@@ -36,7 +36,7 @@ const ModalForm = ({
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 400 }}>
+        <Box sx={{ ...style }}>
           {content}
 
           <Grid container sx={{ marginTop: '10px' }}>
