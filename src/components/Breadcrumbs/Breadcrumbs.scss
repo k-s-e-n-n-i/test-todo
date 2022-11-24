@@ -1,0 +1,28 @@
+.breadcrumbs {
+  margin-bottom: 16px;
+
+  &__item {
+    &:not(:nth-child(1)) {
+      &:before {
+        content: '•';
+        color: #737580;
+        margin: 0 8px;
+      }
+    }
+  }
+
+  &__link {
+    text-decoration: none;
+    color: #737580;
+
+    @media (hover: hover) {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    span {
+      color: #737580;
+    }
+  }
+}
