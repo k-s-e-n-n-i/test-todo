@@ -1,5 +1,6 @@
 import React, { useState, ReactElement, Fragment } from 'react';
 import { Box, Modal, Grid, Button } from '@mui/material';
+import './ModalForm.scss';
 
 const ModalForm = ({
   textButton,
@@ -16,7 +17,7 @@ const ModalForm = ({
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    minWidth: 320,
     bgcolor: 'background.paper',
     border: '2px solid #eee',
     boxShadow: 2,
@@ -37,13 +38,11 @@ const ModalForm = ({
         aria-describedby="child-modal-description"
       >
         <Box sx={{ ...style }}>
-          {content}
+          <div className="modal-form">
+            {content}
 
-          <Grid container sx={{ marginTop: '10px' }}>
-            <Grid item xs={12} md={6}>
+            <div className="modal-form__buttons">
               <Button onClick={() => setOpen(false)}>Отменить</Button>
-            </Grid>
-            <Grid item xs={12} md={6}>
               <Button
                 onClick={() => {
                   setOpen(false);
@@ -52,8 +51,8 @@ const ModalForm = ({
               >
                 Сохранить
               </Button>
-            </Grid>
-          </Grid>
+            </div>
+          </div>
         </Box>
       </Modal>
     </Fragment>

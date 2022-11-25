@@ -1,5 +1,6 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IFStateTask, Props } from './interfaces';
+import './ContentFormTask.scss';
 import { connect } from 'react-redux';
 import WithStore from '../../redux/hoc/WithStore';
 import { MapStateToProps } from '../../redux/services/MapStateToProps';
@@ -84,15 +85,19 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
   }, [title, description, dateEnd, status, timeH, timeM, priority]);
 
   return (
-    <Fragment>
-      <div>
+    <div className="content-form-task">
+      <div className="content-form-task__line">
+        <InputLabel>Заголовок:</InputLabel>
         <Input value={title} placeholder="Заголовок" onChange={(e) => setTitle(e.target.value)} />
       </div>
-      <Input value={description} placeholder="Описание" onChange={(e) => setDescription(e.target.value)} />
+      <div className="content-form-task__line">
+        <InputLabel>Описание:</InputLabel>
+        <Input value={description} placeholder="Описание" onChange={(e) => setDescription(e.target.value)} />
+      </div>
 
-      <div className="page-project__flex">
-        <InputLabel id="select-label-from">Статус:</InputLabel>
-        <Select labelId="select-label-from" value={status} onChange={(e) => setStatus(e.target.value)}>
+      <div className="content-form-task__line">
+        <InputLabel>Статус:</InputLabel>
+        <Select value={status} onChange={(e) => setStatus(e.target.value)}>
           <MenuItem value={0}>Queue</MenuItem>
           <MenuItem value={1}>Development</MenuItem>
           <MenuItem value={2}>Done</MenuItem>
@@ -109,10 +114,11 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
             setDateEnd(newValue ? newValue.format('YYYY-MM-DD') : new Date().toDateString());
           }}
           renderInput={(params) => <TextField {...params} />}
+          className="content-form-task__datepicker"
         />
       </LocalizationProvider>
 
-      <div className="page-project__flex">
+      <div className="content-form-task__line">
         <InputLabel id="select-priority-label-from">Приоритет:</InputLabel>
         <Select
           labelId="select-priority-label-from"
@@ -125,10 +131,30 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
         </Select>
       </div>
 
-      <p>Время в работе (часы, минуты):</p>
-      <Input value={timeH} placeholder="Время в работе, часы" onChange={(e) => setTimeH(e.target.value)} />
-      <Input value={timeM} placeholder="Время в работе, минуты" onChange={(e) => setTimeM(e.target.value)} />
-    </Fragment>
+      <div className="content-form-task__line">
+        <InputLabel>Время в работе:</InputLabel>
+        <div className="content-form-task__time">
+          <div>
+            <Input
+              value={timeH}
+              placeholder="Время в работе, часы"
+              onChange={(e) => setTimeH(e.target.value)}
+              className="content-form-task__work-time"
+            />
+            <span>ч.</span>
+          </div>
+          <div>
+            <Input
+              value={timeM}
+              placeholder="Время в работе, минуты"
+              onChange={(e) => setTimeM(e.target.value)}
+              className="content-form-task__work-time"
+            />
+            <span>мин.</span>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
