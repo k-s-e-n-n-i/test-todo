@@ -137,7 +137,7 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
           <div>
             <Input
               value={timeH}
-              placeholder="Время в работе, часы"
+              placeholder="hh"
               onChange={(e) => setTimeH(e.target.value)}
               className="content-form-task__work-time"
             />
@@ -146,7 +146,7 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
           <div>
             <Input
               value={timeM}
-              placeholder="Время в работе, минуты"
+              placeholder="mm"
               onChange={(e) => setTimeM(e.target.value)}
               className="content-form-task__work-time"
             />

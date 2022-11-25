@@ -22,15 +22,17 @@ const PageProject = ({ currentProject, projects, projectsLoaded, currentProjectU
       <div className="page-project">
         <Breadcrumbs title={currentProject.name} />
 
+        <div className="page-project__button">
+          <ModalForm
+            textButton="Добавить задачу"
+            saved={() => Service.savedTask({ projects, projectsLoaded, currentProject, updatedProject })}
+            content={<ContentFormTask project={currentProject} setUpdatedProject={setUpdatedProject} />}
+          />
+        </div>
+
         <div className="page-project__tasks">
           {currentProject.tasks ? currentProject.tasks.map((task, i) => <Task task={task} key={i} />) : null}
         </div>
-
-        <ModalForm
-          textButton="Добавить задачу"
-          saved={() => Service.savedTask({ projects, projectsLoaded, currentProject, updatedProject })}
-          content={<ContentFormTask project={currentProject} setUpdatedProject={setUpdatedProject} />}
-        />
       </div>
     );
   }
