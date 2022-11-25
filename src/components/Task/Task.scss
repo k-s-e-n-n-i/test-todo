@@ -2,8 +2,14 @@
   border: 2px solid #eee;
   padding: 0 15px 20px;
 
+  &__main-block {
+    display: grid;
+    grid-template-columns: 300px auto;
+  }
+
   h2,
   p {
     margin: 5px 0;
+    word-break: break-all;
   }
 }
