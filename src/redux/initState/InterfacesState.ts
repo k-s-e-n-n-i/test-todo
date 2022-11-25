@@ -10,13 +10,16 @@ export interface IFProject {
 }
 
 export interface IFTask {
-  project: string;
+  projectId: number;
   id: number;
   title: string;
   date: string;
   description: string;
   status: string;
-  time: string;
+  time: {
+    hour: string;
+    minutes: string;
+  };
   dateEnd: string;
   priority: string;
 }
