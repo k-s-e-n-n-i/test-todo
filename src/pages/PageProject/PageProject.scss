@@ -1,6 +1,12 @@
 .page-project {
   &__tasks {
+    // display: flex;
+    // flex-wrap: wrap;
+  }
+
+  &__flex {
     display: flex;
-    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
   }
 }
