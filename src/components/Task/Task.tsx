@@ -15,7 +15,7 @@ import TimeInWork from '../TimeInWork/TimeInWork';
 import { Checkbox, FormControlLabel, Input } from '@mui/material';
 
 const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUpdated }: Props) => {
-  const { id, title, date, description, status, time, dateEnd, priority, subTasks } = task;
+  const { id, title, date, description, status, time, dateEnd, priority, subTasks, doneTask } = task;
   Service.definedCurrentProject({ projects, currentProjectUpdated });
 
   const [updatedProject, setUpdatedProject] = useState<IFProject>();
@@ -30,7 +30,7 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
   const minutes = Math.floor(sumMin - hour * 60);
 
   return (
-    <div className="task">
+    <div className={`task ${doneTask ? 'task__done' : ''}`}>
       <h2>{`${id}. ${title}`}</h2>
       <div className="task__main-block">
         <div>
@@ -42,6 +42,26 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
         </div>
 
         <div className="task__column">
+          <FormControlLabel
+            className="task__checkbox-done"
+            control={
+              <Checkbox
+                checked={doneTask}
+                onChange={(e) =>
+                  Service.setStatusTask({
+                    doneSubTask: e.target.checked,
+                    idSubTask: id,
+                    projects,
+                    currentProject,
+                    idTask: task.id,
+                    projectsLoaded,
+                  })
+                }
+              />
+            }
+            label={doneTask ? 'Задача завершена' : 'Завершить задачу'}
+          />
+
           <ModalForm
             textButton="Редактировать задачу"
             saved={() => Service.savedTask({ projects, projectsLoaded, currentProject, updatedProject })}
