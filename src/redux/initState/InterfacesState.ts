@@ -16,10 +16,14 @@ export interface IFTask {
   date: string;
   description: string;
   status: string;
-  time: {
-    hour: string;
-    minutes: string;
-  };
+  time: IFTime[];
   dateEnd: string;
   priority: string;
+  subTasks: string[];
+}
+
+export interface IFTime {
+  date: Date;
+  timeStart: Date;
+  timeEnd: Date;
 }

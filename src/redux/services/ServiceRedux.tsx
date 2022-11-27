@@ -1,4 +1,4 @@
-import { IFProject } from '../initState/InterfacesState';
+import { IFProject, IFTime } from '../initState/InterfacesState';
 
 class ServiceRedux {
   getProjects = (projectsLoaded: any) => {
@@ -35,6 +35,46 @@ class ServiceRedux {
       'TODO-list-projects',
       JSON.stringify([...projects.slice(0, idx), updatedProject, ...projects.slice(idx + 1)])
     );
+  };
+
+  addedTimeInWork = ({
+    time,
+    projects,
+    currentProject,
+    idTask,
+    projectsLoaded,
+  }: {
+    time: IFTime | undefined;
+    projects: IFProject[];
+    currentProject: IFProject | undefined;
+    idTask: number;
+    projectsLoaded: any;
+  }) => {
+    if (time && currentProject) {
+      const { date, timeStart, timeEnd } = time;
+      const idx = projects.indexOf(currentProject);
+      const tasks = projects[idx].tasks;
+      const task = tasks.find((x) => x.id === idTask);
+
+      if (task) {
+        const idxtask = tasks.indexOf(task);
+        const newTime = [...task.time, { date, timeStart, timeEnd }];
+
+        const newTasks = [
+          ...projects[idx].tasks.slice(0, idxtask),
+          Object.assign({}, projects[idx].tasks[idxtask], { time: newTime }),
+          ...projects[idx].tasks.slice(idxtask + 1),
+        ];
+        const result = [
+          ...projects.slice(0, idx),
+          Object.assign({}, projects[idx], { tasks: newTasks }),
+          ...projects.slice(idx + 1),
+        ];
+
+        projectsLoaded(result);
+        localStorage.setItem('TODO-list-projects', JSON.stringify(result));
+      }
+    }
   };
 }
 

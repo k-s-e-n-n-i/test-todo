@@ -47,7 +47,7 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
         date: moment(new Date()).format('DD.MM.YYYY HH:mm:ss'),
         description,
         status: StatutesTexts[Number(status)],
-        time: { hour: timeH, minutes: timeM },
+        time: [],
         dateEnd,
         priority: PriorityTexts[Number(priority)],
       },
@@ -68,7 +68,7 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
             date: editTask.date,
             description,
             status: StatutesTexts[Number(status)],
-            time: { hour: timeH, minutes: timeM },
+            time: editTask.time,
             dateEnd,
             priority: PriorityTexts[Number(priority)],
           },
@@ -129,30 +129,6 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
           <MenuItem value={1}>Средний</MenuItem>
           <MenuItem value={2}>Высокий</MenuItem>
         </Select>
-      </div>
-
-      <div className="content-form-task__line">
-        <InputLabel>Время в работе:</InputLabel>
-        <div className="content-form-task__time">
-          <div>
-            <Input
-              value={timeH}
-              placeholder="hh"
-              onChange={(e) => setTimeH(e.target.value)}
-              className="content-form-task__work-time"
-            />
-            <span>ч.</span>
-          </div>
-          <div>
-            <Input
-              value={timeM}
-              placeholder="mm"
-              onChange={(e) => setTimeM(e.target.value)}
-              className="content-form-task__work-time"
-            />
-            <span>мин.</span>
-          </div>
-        </div>
       </div>
     </div>
   );
