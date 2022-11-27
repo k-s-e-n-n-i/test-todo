@@ -12,13 +12,15 @@ import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
 import { PriorityTexts, StatutesTexts } from '../../redux/services/Constants';
 import moment from 'moment';
 import TimeInWork from '../TimeInWork/TimeInWork';
+import { Checkbox, FormControlLabel, Input } from '@mui/material';
 
 const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUpdated }: Props) => {
-  const { id, title, date, description, status, time, dateEnd, priority } = task;
+  const { id, title, date, description, status, time, dateEnd, priority, subTasks } = task;
   Service.definedCurrentProject({ projects, currentProjectUpdated });
 
   const [updatedProject, setUpdatedProject] = useState<IFProject>();
   const [addTime, setAddTime] = useState<IFTime>();
+  const [addSubTask, setAddSubTask] = useState('');
 
   let sumMin: any = 0;
   time.forEach(({ timeStart, timeEnd }, i) => {
@@ -39,7 +41,7 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
           <p>{`Время в работе: ${hour} ч. ${minutes} мин.`}</p>
         </div>
 
-        <div>
+        <div className="task__column">
           <ModalForm
             textButton="Редактировать задачу"
             saved={() => Service.savedTask({ projects, projectsLoaded, currentProject, updatedProject })}
@@ -73,8 +75,31 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
             }
           />
 
+          <ModalForm
+            textButton="Добавить подзадачу"
+            saved={() => {
+              Service.addedSubTask({
+                nameSubTask: addSubTask,
+                projects,
+                currentProject,
+                idTask: id,
+                projectsLoaded,
+              });
+              setAddSubTask('');
+            }}
+            content={
+              <div>
+                <h2>Подзадача</h2>
+                <Input
+                  value={addSubTask}
+                  placeholder="Наименование"
+                  onChange={(e) => setAddSubTask(e.target.value)}
+                />
+              </div>
+            }
+          />
+
           <p>files</p>
-          <button>Добавить подзадачу</button>
           <div>Комментарии....</div>
         </div>
       </div>
@@ -93,6 +118,12 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
                 timeEnd
               ).format('HH:mm')}`}
             </p>
+          ))}
+        </div>
+        <div className="task__column">
+          <h3>Подзадачи:</h3>
+          {subTasks.map((item, i) => (
+            <FormControlLabel control={<Checkbox />} label={item} key={i} />
           ))}
         </div>
       </div>

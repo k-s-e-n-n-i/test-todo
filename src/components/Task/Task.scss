@@ -7,6 +7,12 @@
     grid-template-columns: 300px auto;
   }
 
+  &__column {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+
   h2,
   p {
     margin: 5px 0;

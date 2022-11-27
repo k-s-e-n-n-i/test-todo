@@ -57,13 +57,52 @@ class ServiceRedux {
       const task = tasks.find((x) => x.id === idTask);
 
       if (task) {
-        const idxtask = tasks.indexOf(task);
+        const idxTask = tasks.indexOf(task);
         const newTime = [...task.time, { date, timeStart, timeEnd }];
 
         const newTasks = [
-          ...projects[idx].tasks.slice(0, idxtask),
-          Object.assign({}, projects[idx].tasks[idxtask], { time: newTime }),
-          ...projects[idx].tasks.slice(idxtask + 1),
+          ...projects[idx].tasks.slice(0, idxTask),
+          Object.assign({}, projects[idx].tasks[idxTask], { time: newTime }),
+          ...projects[idx].tasks.slice(idxTask + 1),
+        ];
+        const result = [
+          ...projects.slice(0, idx),
+          Object.assign({}, projects[idx], { tasks: newTasks }),
+          ...projects.slice(idx + 1),
+        ];
+
+        projectsLoaded(result);
+        localStorage.setItem('TODO-list-projects', JSON.stringify(result));
+      }
+    }
+  };
+
+  addedSubTask = ({
+    nameSubTask,
+    projects,
+    currentProject,
+    idTask,
+    projectsLoaded,
+  }: {
+    nameSubTask: string;
+    projects: IFProject[];
+    currentProject: IFProject | undefined;
+    idTask: number;
+    projectsLoaded: any;
+  }) => {
+    if (currentProject) {
+      const idx = projects.indexOf(currentProject);
+      const tasks = projects[idx].tasks;
+      const task = tasks.find((x) => x.id === idTask);
+
+      if (task) {
+        const idxTask = tasks.indexOf(task);
+        const newSubTask = [...task.subTasks, nameSubTask];
+
+        const newTasks = [
+          ...projects[idx].tasks.slice(0, idxTask),
+          Object.assign({}, projects[idx].tasks[idxTask], { subTasks: newSubTask }),
+          ...projects[idx].tasks.slice(idxTask + 1),
         ];
         const result = [
           ...projects.slice(0, idx),

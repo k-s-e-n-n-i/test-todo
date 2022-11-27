@@ -50,6 +50,7 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
         time: [],
         dateEnd,
         priority: PriorityTexts[Number(priority)],
+        subTasks: [],
       },
     ];
 
@@ -71,6 +72,7 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
             time: editTask.time,
             dateEnd,
             priority: PriorityTexts[Number(priority)],
+            subTasks: editTask.subTasks,
           },
           ...project.tasks.slice(idxEditTask + 1),
         ];
