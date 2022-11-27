@@ -97,7 +97,7 @@ class ServiceRedux {
 
       if (task) {
         const idxTask = tasks.indexOf(task);
-        const newSubTask = [...task.subTasks, nameSubTask];
+        const newSubTask = [...task.subTasks, { name: nameSubTask, done: false, id: Date.now() }];
 
         const newTasks = [
           ...projects[idx].tasks.slice(0, idxTask),
@@ -112,6 +112,56 @@ class ServiceRedux {
 
         projectsLoaded(result);
         localStorage.setItem('TODO-list-projects', JSON.stringify(result));
+      }
+    }
+  };
+
+  setStatusSubTask = ({
+    doneSubTask,
+    idSubTask,
+    projects,
+    currentProject,
+    idTask,
+    projectsLoaded,
+  }: {
+    doneSubTask: boolean;
+    idSubTask: number;
+    projects: IFProject[];
+    currentProject: IFProject | undefined;
+    idTask: number;
+    projectsLoaded: any;
+  }) => {
+    if (currentProject) {
+      const idx = projects.indexOf(currentProject);
+      const tasks = projects[idx].tasks;
+      const task = tasks.find((x) => x.id === idTask);
+
+      if (task) {
+        const idxTask = tasks.indexOf(task);
+        const subTask = task.subTasks.find((x) => x.id === idSubTask);
+
+        if (subTask) {
+          const idxSubTask = task.subTasks.indexOf(subTask);
+          const newSubTask = [
+            ...task.subTasks.slice(0, idxSubTask),
+            Object.assign({}, task.subTasks[idxSubTask], { done: doneSubTask }),
+            ...task.subTasks.slice(idxSubTask + 1),
+          ];
+
+          const newTasks = [
+            ...projects[idx].tasks.slice(0, idxTask),
+            Object.assign({}, projects[idx].tasks[idxTask], { subTasks: newSubTask }),
+            ...projects[idx].tasks.slice(idxTask + 1),
+          ];
+          const result = [
+            ...projects.slice(0, idx),
+            Object.assign({}, projects[idx], { tasks: newTasks }),
+            ...projects.slice(idx + 1),
+          ];
+
+          projectsLoaded(result);
+          localStorage.setItem('TODO-list-projects', JSON.stringify(result));
+        }
       }
     }
   };

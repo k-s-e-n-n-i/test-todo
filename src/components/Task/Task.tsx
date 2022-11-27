@@ -122,8 +122,26 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
         </div>
         <div className="task__column">
           <h3>Подзадачи:</h3>
-          {subTasks.map((item, i) => (
-            <FormControlLabel control={<Checkbox />} label={item} key={i} />
+          {subTasks.map(({ name, done, id }, i) => (
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={done}
+                  onChange={(e) =>
+                    Service.setStatusSubTask({
+                      doneSubTask: e.target.checked,
+                      idSubTask: id,
+                      projects,
+                      currentProject,
+                      idTask: task.id,
+                      projectsLoaded,
+                    })
+                  }
+                />
+              }
+              label={name}
+              key={i}
+            />
           ))}
         </div>
       </div>

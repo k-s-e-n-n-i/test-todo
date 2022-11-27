@@ -19,11 +19,17 @@ export interface IFTask {
   time: IFTime[];
   dateEnd: string;
   priority: string;
-  subTasks: string[];
+  subTasks: IFSubTask[];
 }
 
 export interface IFTime {
   date: Date;
   timeStart: Date;
   timeEnd: Date;
+}
+
+export interface IFSubTask {
+  name: string[];
+  done: boolean;
+  id: number;
 }
