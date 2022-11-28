@@ -14,8 +14,16 @@ import moment from 'moment';
 import TimeInWork from '../TimeInWork/TimeInWork';
 import { Checkbox, FormControlLabel, Input } from '@mui/material';
 import FileUpload from '../FileUpload/FileUpload';
+import CommentsBlock from '../CommentsBlock/CommentsBlock';
 
-const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUpdated }: Props) => {
+const Task = ({
+  task,
+  currentProject,
+  projects,
+  projectsLoaded,
+  currentProjectUpdated,
+  commentsLoaded,
+}: Props) => {
   const {
     id,
     numberTask,
@@ -148,8 +156,6 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
             }}
             content={<FileUpload setFiles={setFiles} />}
           />
-
-          <div>Комментарии....</div>
         </div>
       </div>
 
@@ -206,6 +212,8 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
             : null}
         </div>
       </div>
+
+      <CommentsBlock idTask={id} />
     </div>
   );
 };

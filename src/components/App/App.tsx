@@ -9,9 +9,10 @@ import { MapStateToProps } from '../../redux/services/MapStateToProps';
 import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
 import './App.scss';
 
-const App = ({ projectsLoaded }: { projectsLoaded: any }) => {
+const App = ({ projectsLoaded, commentsLoaded }: { projectsLoaded: any; commentsLoaded: any }) => {
   useEffect(() => {
     Service.getProjects(projectsLoaded);
+    Service.getComments(commentsLoaded);
   }, []);
 
   return (

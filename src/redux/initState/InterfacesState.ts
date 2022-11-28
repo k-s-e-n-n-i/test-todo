@@ -1,6 +1,7 @@
 export interface IFProjectState {
   projects: IFProject[];
   currentProject: IFProject | undefined;
+  comments: IFComment[];
 }
 
 export interface IFProject {
@@ -40,4 +41,13 @@ export interface IFSubTask {
 export interface IFFile {
   nameFile: string;
   file: string | undefined;
+}
+
+export interface IFComment {
+  id: number;
+  idProject: number;
+  idTask: number;
+  idParent: number;
+  text: string;
+  date: string;
 }

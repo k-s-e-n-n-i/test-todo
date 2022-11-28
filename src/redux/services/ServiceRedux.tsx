@@ -1,10 +1,17 @@
-import { IFFile, IFProject, IFTask, IFTime } from '../initState/InterfacesState';
+import { IFComment, IFFile, IFProject, IFTask, IFTime } from '../initState/InterfacesState';
 
 class ServiceRedux {
   getProjects = (projectsLoaded: any) => {
     const storageListProjects = localStorage.getItem('TODO-list-projects');
     if (storageListProjects) {
       projectsLoaded(JSON.parse(storageListProjects));
+    }
+  };
+
+  getComments = (commentsLoaded: any) => {
+    const storageListComments = localStorage.getItem('TODO-list-comments');
+    if (storageListComments) {
+      commentsLoaded(JSON.parse(storageListComments));
     }
   };
 
@@ -249,6 +256,26 @@ class ServiceRedux {
     const arrByNumber = tasks.filter((x) => x.numberTask.toString().includes(search));
 
     return [...arrByTitle, ...arrByNumber];
+  };
+
+  addedComment = ({
+    commentsLoaded,
+    idProject,
+    idTask,
+    idParent,
+    text,
+    comments,
+  }: {
+    commentsLoaded: any;
+    idProject: number;
+    idTask: number;
+    idParent: number;
+    text: string;
+    comments: IFComment[];
+  }) => {
+    const newComment = { id: Date.now(), idProject, idTask, idParent, text, date: new Date().toString() };
+    commentsLoaded([...comments, newComment]);
+    localStorage.setItem('TODO-list-comments', JSON.stringify([...comments, newComment]));
   };
 }
 

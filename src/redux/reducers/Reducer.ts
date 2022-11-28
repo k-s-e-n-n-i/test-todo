@@ -6,6 +6,8 @@ const reducer = (state: any = ProjectState, action: { type: string; payload: obj
       return { ...state, projects: action.payload };
     case 'CURRENT_NAME_PROJECT_UPDATED':
       return { ...state, currentProject: action.payload };
+    case 'COMMENTS_LOADED':
+      return { ...state, comments: action.payload };
 
     default:
       return state;
