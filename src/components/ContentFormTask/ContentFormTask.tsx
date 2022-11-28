@@ -43,6 +43,7 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
       {
         projectId: project.id,
         id: Date.now(),
+        numberTask: project.tasks.length + 1,
         title,
         date: moment(new Date()).format('DD.MM.YYYY HH:mm:ss'),
         description,
@@ -66,6 +67,7 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
           {
             projectId: project.id,
             id: editTask.id,
+            numberTask: editTask.numberTask,
             title,
             date: editTask.date,
             description,

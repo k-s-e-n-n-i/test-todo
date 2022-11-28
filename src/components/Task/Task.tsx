@@ -16,7 +16,20 @@ import { Checkbox, FormControlLabel, Input } from '@mui/material';
 import FileUpload from '../FileUpload/FileUpload';
 
 const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUpdated }: Props) => {
-  const { id, title, date, description, status, time, dateEnd, priority, subTasks, doneTask, files } = task;
+  const {
+    id,
+    numberTask,
+    title,
+    date,
+    description,
+    status,
+    time,
+    dateEnd,
+    priority,
+    subTasks,
+    doneTask,
+    files,
+  } = task;
   Service.definedCurrentProject({ projects, currentProjectUpdated });
 
   const [updatedProject, setUpdatedProject] = useState<IFProject>();
@@ -33,7 +46,7 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
 
   return (
     <div className={`task ${doneTask ? 'task__done' : ''}`}>
-      <h2>{`${id}. ${title}`}</h2>
+      <h2>{`${numberTask}. ${title}`}</h2>
       <div className="task__main-block">
         <div>
           <p>{`Создано: ${date}`}</p>

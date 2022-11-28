@@ -1,4 +1,4 @@
-import { IFFile, IFProject, IFTime } from '../initState/InterfacesState';
+import { IFFile, IFProject, IFTask, IFTime } from '../initState/InterfacesState';
 
 class ServiceRedux {
   getProjects = (projectsLoaded: any) => {
@@ -242,6 +242,13 @@ class ServiceRedux {
         localStorage.setItem('TODO-list-projects', JSON.stringify(result));
       }
     }
+  };
+
+  searchTask = ({ search, tasks }: { search: string; tasks: IFTask[] }) => {
+    const arrByTitle = tasks.filter((x) => x.title.includes(search));
+    const arrByNumber = tasks.filter((x) => x.numberTask.toString().includes(search));
+
+    return [...arrByTitle, ...arrByNumber];
   };
 }
 

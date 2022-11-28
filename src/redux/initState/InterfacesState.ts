@@ -11,6 +11,7 @@ export interface IFProject {
 
 export interface IFTask {
   projectId: number;
+  numberTask: number;
   id: number;
   title: string;
   date: string;
