@@ -4,7 +4,7 @@ import { Service } from '../../redux/services/ServiceRedux';
 import ContentFormTask from '../ContentFormTask/ContentFormTask';
 import ModalForm from '../ModalForm/ModalForm';
 import './Task.scss';
-import { IFProject, IFTime } from '../../redux/initState/InterfacesState';
+import { IFFile, IFProject, IFTime } from '../../redux/initState/InterfacesState';
 import { connect } from 'react-redux';
 import WithStore from '../../redux/hoc/WithStore';
 import { MapStateToProps } from '../../redux/services/MapStateToProps';
@@ -13,14 +13,16 @@ import { PriorityTexts, StatutesTexts } from '../../redux/services/Constants';
 import moment from 'moment';
 import TimeInWork from '../TimeInWork/TimeInWork';
 import { Checkbox, FormControlLabel, Input } from '@mui/material';
+import FileUpload from '../FileUpload/FileUpload';
 
 const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUpdated }: Props) => {
-  const { id, title, date, description, status, time, dateEnd, priority, subTasks, doneTask } = task;
+  const { id, title, date, description, status, time, dateEnd, priority, subTasks, doneTask, files } = task;
   Service.definedCurrentProject({ projects, currentProjectUpdated });
 
   const [updatedProject, setUpdatedProject] = useState<IFProject>();
   const [addTime, setAddTime] = useState<IFTime>();
   const [addSubTask, setAddSubTask] = useState('');
+  const [addFiles, setFiles] = useState<IFFile[] | null>(null);
 
   let sumMin: any = 0;
   time.forEach(({ timeStart, timeEnd }, i) => {
@@ -119,7 +121,21 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
             }
           />
 
-          <p>files</p>
+          <ModalForm
+            textButton="Загрузить файлы"
+            saved={() => {
+              Service.uploadFiles({
+                addFiles,
+                projects,
+                currentProject,
+                idTask: id,
+                projectsLoaded,
+              });
+              setFiles(null);
+            }}
+            content={<FileUpload setFiles={setFiles} />}
+          />
+
           <div>Комментарии....</div>
         </div>
       </div>
@@ -163,6 +179,18 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
               key={i}
             />
           ))}
+        </div>
+        <div>
+          <h3>Файлы:</h3>
+          {files
+            ? files.map((item, i) => (
+                <div key={i}>
+                  <a href={item.file} download={item.nameFile} target="_blank" rel="noreferrer">
+                    {item.nameFile}
+                  </a>
+                </div>
+              ))
+            : null}
         </div>
       </div>
     </div>

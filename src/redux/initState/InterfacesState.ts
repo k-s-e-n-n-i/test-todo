@@ -21,6 +21,7 @@ export interface IFTask {
   priority: string;
   subTasks: IFSubTask[];
   doneTask: boolean;
+  files: IFFile[];
 }
 
 export interface IFTime {
@@ -33,4 +34,9 @@ export interface IFSubTask {
   name: string[];
   done: boolean;
   id: number;
+}
+
+export interface IFFile {
+  nameFile: string;
+  file: string | undefined;
 }

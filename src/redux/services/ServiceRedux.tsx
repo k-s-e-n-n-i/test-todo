@@ -1,4 +1,4 @@
-import { IFProject, IFTime } from '../initState/InterfacesState';
+import { IFFile, IFProject, IFTime } from '../initState/InterfacesState';
 
 class ServiceRedux {
   getProjects = (projectsLoaded: any) => {
@@ -192,6 +192,44 @@ class ServiceRedux {
         const newTasks = [
           ...tasks.slice(0, idxTask),
           Object.assign({}, task, { doneTask: !task.doneTask }),
+          ...tasks.slice(idxTask + 1),
+        ];
+        const result = [
+          ...projects.slice(0, idx),
+          Object.assign({}, projects[idx], { tasks: newTasks }),
+          ...projects.slice(idx + 1),
+        ];
+
+        projectsLoaded(result);
+        localStorage.setItem('TODO-list-projects', JSON.stringify(result));
+      }
+    }
+  };
+
+  uploadFiles = ({
+    addFiles,
+    projects,
+    currentProject,
+    idTask,
+    projectsLoaded,
+  }: {
+    addFiles: IFFile[] | null;
+    projects: IFProject[];
+    currentProject: IFProject | undefined;
+    idTask: number;
+    projectsLoaded: any;
+  }) => {
+    if (currentProject && addFiles) {
+      const idx = projects.indexOf(currentProject);
+      const tasks = projects[idx].tasks;
+      const task = tasks.find((x) => x.id === idTask);
+
+      if (task) {
+        const idxTask = tasks.indexOf(task);
+
+        const newTasks = [
+          ...tasks.slice(0, idxTask),
+          Object.assign({}, task, { files: [...task.files, ...addFiles] }),
           ...tasks.slice(idxTask + 1),
         ];
         const result = [
