@@ -12,6 +12,9 @@ import { IFProject, IFTask } from '../../redux/initState/InterfacesState';
 import ContentFormTask from '../../components/ContentFormTask/ContentFormTask';
 import { Service } from '../../redux/services/ServiceRedux';
 import { Input } from '@mui/material';
+import Dnd from '../../components/Dnd/Dnd';
+import { IFDndColumn } from '../../components/Dnd/interfaces';
+import { Statutes } from '../../redux/services/Constants';
 
 const PageProject = ({ currentProject, projects, projectsLoaded, currentProjectUpdated }: Props) => {
   Service.definedCurrentProject({ projects, currentProjectUpdated });
@@ -19,6 +22,7 @@ const PageProject = ({ currentProject, projects, projectsLoaded, currentProjectU
   const [updatedProject, setUpdatedProject] = useState<IFProject>();
   const [search, setSearch] = useState('');
   const [filterTasks, setFilterTasks] = useState<IFTask[]>(currentProject?.tasks || []);
+  const [listTask, setListTask] = useState<IFDndColumn[]>([]);
 
   useEffect(() => {
     if (currentProject) {
@@ -32,6 +36,25 @@ const PageProject = ({ currentProject, projects, projectsLoaded, currentProjectU
       setFilterTasks(arrTasks);
     }
   }, [search]);
+
+  useEffect(() => {
+    if (filterTasks.length !== 0) {
+      setListTask([
+        {
+          title: Statutes.Queue,
+          items: filterTasks.filter((x) => x.status === Statutes.Queue),
+        },
+        {
+          title: Statutes.Development,
+          items: filterTasks.filter((x) => x.status === Statutes.Development),
+        },
+        {
+          title: Statutes.Done,
+          items: filterTasks.filter((x) => x.status === Statutes.Done),
+        },
+      ]);
+    }
+  }, [filterTasks]);
 
   if (currentProject) {
     return (
@@ -49,6 +72,7 @@ const PageProject = ({ currentProject, projects, projectsLoaded, currentProjectU
         </div>
 
         <div className="page-project__tasks">
+        {listTask.length !== 0 ? <Dnd listColumns={listTask} getNewList={() => {}} /> : null}
           {filterTasks.map((task, i) => (
             <Task task={task} key={i} />
           ))}
