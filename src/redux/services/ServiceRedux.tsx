@@ -54,7 +54,7 @@ class ServiceRedux {
     time: IFTime | undefined;
     projects: IFProject[];
     currentProject: IFProject | undefined;
-    idTask: number;
+    idTask: string;
     projectsLoaded: any;
   }) => {
     if (time && currentProject) {
@@ -94,7 +94,7 @@ class ServiceRedux {
     nameSubTask: string;
     projects: IFProject[];
     currentProject: IFProject | undefined;
-    idTask: number;
+    idTask: string;
     projectsLoaded: any;
   }) => {
     if (currentProject) {
@@ -135,7 +135,7 @@ class ServiceRedux {
     idSubTask: number;
     projects: IFProject[];
     currentProject: IFProject | undefined;
-    idTask: number;
+    idTask: string;
     projectsLoaded: any;
   }) => {
     if (currentProject) {
@@ -182,10 +182,10 @@ class ServiceRedux {
     projectsLoaded,
   }: {
     doneSubTask: boolean;
-    idSubTask: number;
+    idSubTask: string;
     projects: IFProject[];
     currentProject: IFProject | undefined;
-    idTask: number;
+    idTask: string;
     projectsLoaded: any;
   }) => {
     if (currentProject) {
@@ -223,7 +223,7 @@ class ServiceRedux {
     addFiles: IFFile[] | null;
     projects: IFProject[];
     currentProject: IFProject | undefined;
-    idTask: number;
+    idTask: string;
     projectsLoaded: any;
   }) => {
     if (currentProject && addFiles) {

@@ -13,7 +13,7 @@ export interface IFProject {
 export interface IFTask {
   projectId: number;
   numberTask: number;
-  id: number;
+  id: string;
   title: string;
   date: string;
   description: string;

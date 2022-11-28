@@ -7,7 +7,7 @@ export interface Props {
 }
 
 export interface IFStateTask {
-  id: number;
+  id: string;
   title: string;
   description: string;
   dateEnd: string | null;

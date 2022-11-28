@@ -14,7 +14,7 @@ import moment from 'moment';
 import { IFTask } from '../../redux/initState/InterfacesState';
 
 const defaultDataForm: IFStateTask = {
-  id: 0,
+  id: '0',
   title: '',
   description: '',
   dateEnd: null,
@@ -42,7 +42,7 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
       ...project.tasks,
       {
         projectId: project.id,
-        id: Date.now(),
+        id: Date.now().toString(),
         numberTask: project.tasks.length + 1,
         title,
         date: moment(new Date()).format('DD.MM.YYYY HH:mm:ss'),
