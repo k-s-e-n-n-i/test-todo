@@ -1,0 +1,26 @@
+.file-upload {
+  display: flex;
+
+  &__line {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__delete-files {
+    cursor: pointer;
+    padding-left: 25px;
+  }
+
+  &__attach {
+    position: relative;
+    display: block;
+    opacity: 0.6;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  &__input {
+    position: absolute;
+    opacity: 0;
+  }
+}
