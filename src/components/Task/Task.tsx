@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Props } from './interfaces';
 import { Service } from '../../redux/services/ServiceRedux';
 import ContentFormTask from '../ContentFormTask/ContentFormTask';
@@ -13,9 +13,10 @@ import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
 import { PriorityTexts, Statutes, StatutesTexts } from '../../redux/services/Constants';
 import moment from 'moment';
 import TimeInWork from '../TimeInWork/TimeInWork';
-import { Checkbox, FormControlLabel, Input } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, Input } from '@mui/material';
 import FileUpload from '../FileUpload/FileUpload';
 import CommentsBlock from '../CommentsBlock/CommentsBlock';
+import EditForm from '../EditForm/EditForm';
 
 const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUpdated }: Props) => {
   const { id, numberTask, title, date, description, status, time, dateEnd, priority, subTasks, files } = task;
@@ -38,12 +39,36 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
       <h2>{`${numberTask}. ${title}`}</h2>
       <div className="task__main-block">
         <div>
-          <p>{`Создано: ${date}`}</p>
-          <p>{`Статус: ${status}`}</p>
-          <p>{`Приоритет: ${priority}`}</p>
-          <p>{`Дата окончания: ${moment(dateEnd).format('DD.MM.YYYY')}`}</p>
-          <p>{`Время в работе: ${hour} ч. ${minutes} мин.`}</p>
+          <EditForm
+            buttonText="Редактировать"
+            saved={() => Service.savedTask({ projects, projectsLoaded, currentProject, updatedProject })}
+            contentMain={
+              <Fragment>
+                <p>{`Создано: ${date}`}</p>
+                <p>{`Статус: ${status}`}</p>
+                <p>{`Приоритет: ${priority}`}</p>
+                <p>{`Дата окончания: ${dateEnd ? moment(dateEnd).format('DD.MM.YYYY') : 'не указана'}`}</p>
+              </Fragment>
+            }
+            contentEdit={
+              <ContentFormTask
+                project={currentProject}
+                setUpdatedProject={setUpdatedProject}
+                editData={{
+                  id,
+                  title,
+                  description,
+                  dateEnd,
+                  status: StatutesTexts.indexOf(status),
+                  time,
+                  priority: PriorityTexts.indexOf(priority),
+                }}
+              />
+            }
+          />
         </div>
+
+        <span></span>
 
         <div className="task__column">
           <FormControlLabel
@@ -64,78 +89,6 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
             }
             label={status === Statutes.Done ? 'Задача завершена' : 'Завершить задачу'}
           />
-
-          <ModalForm
-            textButton="Редактировать задачу"
-            saved={() => Service.savedTask({ projects, projectsLoaded, currentProject, updatedProject })}
-            content={
-              <ContentFormTask
-                project={currentProject}
-                setUpdatedProject={setUpdatedProject}
-                editData={{
-                  id,
-                  title,
-                  description,
-                  dateEnd,
-                  status: StatutesTexts.indexOf(status),
-                  time,
-                  priority: PriorityTexts.indexOf(priority),
-                }}
-              />
-            }
-          />
-
-          <ModalForm
-            textButton="Добавить время"
-            saved={() =>
-              Service.addedTimeInWork({ time: addTime, projects, currentProject, idTask: id, projectsLoaded })
-            }
-            content={
-              <div>
-                <h2>Время в работе:</h2>
-                <TimeInWork setTime={setAddTime} />
-              </div>
-            }
-          />
-
-          <ModalForm
-            textButton="Добавить подзадачу"
-            saved={() => {
-              Service.addedSubTask({
-                nameSubTask: addSubTask,
-                projects,
-                currentProject,
-                idTask: id,
-                projectsLoaded,
-              });
-              setAddSubTask('');
-            }}
-            content={
-              <div>
-                <h2>Подзадача</h2>
-                <Input
-                  value={addSubTask}
-                  placeholder="Наименование"
-                  onChange={(e) => setAddSubTask(e.target.value)}
-                />
-              </div>
-            }
-          />
-
-          <ModalForm
-            textButton="Загрузить файлы"
-            saved={() => {
-              Service.uploadFiles({
-                addFiles,
-                projects,
-                currentProject,
-                idTask: id,
-                projectsLoaded,
-              });
-              setFiles(null);
-            }}
-            content={<FileUpload setFiles={setFiles} />}
-          />
         </div>
       </div>
 
@@ -146,7 +99,7 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
 
       <div className="task__main-block">
         <div>
-          <h3>{`Время в работе:`}</h3>
+          <h3>{`Время в работе: ${hour} ч. ${minutes} мин.`}</h3>
           {time.map(({ date, timeStart, timeEnd }, i) => (
             <p key={i}>
               {`${moment(date).format('DD.MM.YY')} с ${moment(timeStart).format('hh:mm')} по ${moment(
@@ -154,6 +107,20 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
               ).format('HH:mm')}`}
             </p>
           ))}
+          <EditForm
+            buttonText="Добавить"
+            contentMain={null}
+            contentEdit={<TimeInWork setTime={setAddTime} />}
+            saved={() =>
+              Service.addedTimeInWork({
+                time: addTime,
+                projects,
+                currentProject,
+                idTask: id,
+                projectsLoaded,
+              })
+            }
+          />
         </div>
         <div className="task__column">
           <h3>Подзадачи:</h3>
@@ -178,6 +145,27 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
               key={i}
             />
           ))}
+          <EditForm
+            buttonText="Добавить"
+            contentMain={null}
+            contentEdit={
+              <Input
+                value={addSubTask}
+                placeholder="Наименование"
+                onChange={(e) => setAddSubTask(e.target.value)}
+              />
+            }
+            saved={() => {
+              Service.addedSubTask({
+                nameSubTask: addSubTask,
+                projects,
+                currentProject,
+                idTask: id,
+                projectsLoaded,
+              });
+              setAddSubTask('');
+            }}
+          />
         </div>
         <div>
           <h3>Файлы:</h3>
@@ -190,6 +178,21 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
                 </div>
               ))
             : null}
+          <EditForm
+            buttonText="Загрузить"
+            contentMain={null}
+            contentEdit={<FileUpload setFiles={setFiles} />}
+            saved={() => {
+              Service.uploadFiles({
+                addFiles,
+                projects,
+                currentProject,
+                idTask: id,
+                projectsLoaded,
+              });
+              setFiles(null);
+            }}
+          />
         </div>
       </div>
 
