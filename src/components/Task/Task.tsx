@@ -102,7 +102,7 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
           <h3>{`Время в работе: ${hour} ч. ${minutes} мин.`}</h3>
           {time.map(({ date, timeStart, timeEnd }, i) => (
             <p key={i}>
-              {`${moment(date).format('DD.MM.YY')} с ${moment(timeStart).format('hh:mm')} по ${moment(
+              {`${moment(date).format('DD.MM.YY')} с ${moment(timeStart).format('HH:mm')} по ${moment(
                 timeEnd
               ).format('HH:mm')}`}
             </p>
