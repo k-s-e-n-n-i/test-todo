@@ -57,30 +57,16 @@ class ServiceRedux {
     idTask: string;
     projectsLoaded: any;
   }) => {
-    if (time && currentProject) {
+    if (time) {
       const { date, timeStart, timeEnd } = time;
-      const idx = projects.indexOf(currentProject);
-      const tasks = projects[idx].tasks;
-      const task = tasks.find((x) => x.id === idTask);
-
-      if (task) {
-        const idxTask = tasks.indexOf(task);
-        const newTime = [...task.time, { date, timeStart, timeEnd }];
-
-        const newTasks = [
-          ...projects[idx].tasks.slice(0, idxTask),
-          Object.assign({}, projects[idx].tasks[idxTask], { time: newTime }),
-          ...projects[idx].tasks.slice(idxTask + 1),
-        ];
-        const result = [
-          ...projects.slice(0, idx),
-          Object.assign({}, projects[idx], { tasks: newTasks }),
-          ...projects.slice(idx + 1),
-        ];
-
-        projectsLoaded(result);
-        localStorage.setItem('TODO-list-projects', JSON.stringify(result));
-      }
+      this.updatedTask({
+        newData: { date, timeStart, timeEnd },
+        keyData: 'time',
+        projects,
+        currentProject,
+        idTask,
+        projectsLoaded,
+      });
     }
   };
 
@@ -97,18 +83,41 @@ class ServiceRedux {
     idTask: string;
     projectsLoaded: any;
   }) => {
+    this.updatedTask({
+      newData: { name: nameSubTask, done: false, id: Date.now() },
+      keyData: 'subTasks',
+      projects,
+      currentProject,
+      idTask,
+      projectsLoaded,
+    });
+  };
+
+  updatedTask = ({
+    newData,
+    keyData,
+    projects,
+    currentProject,
+    idTask,
+    projectsLoaded,
+  }: {
+    newData: any;
+    keyData: 'subTasks' | 'time';
+    projects: IFProject[];
+    currentProject: IFProject | undefined;
+    idTask: string;
+    projectsLoaded: any;
+  }) => {
     if (currentProject) {
-      const idx = projects.indexOf(currentProject);
-      const tasks = projects[idx].tasks;
-      const task = tasks.find((x) => x.id === idTask);
+      const { idx, tasks, task } = this.findTask({ projects, currentProject, idTask });
 
       if (task) {
         const idxTask = tasks.indexOf(task);
-        const newSubTask = [...task.subTasks, { name: nameSubTask, done: false, id: Date.now() }];
+        const newArrData = [...task[keyData], newData];
 
         const newTasks = [
           ...projects[idx].tasks.slice(0, idxTask),
-          Object.assign({}, projects[idx].tasks[idxTask], { subTasks: newSubTask }),
+          Object.assign({}, projects[idx].tasks[idxTask], { [keyData]: newArrData }),
           ...projects[idx].tasks.slice(idxTask + 1),
         ];
         const result = [
@@ -121,6 +130,22 @@ class ServiceRedux {
         localStorage.setItem('TODO-list-projects', JSON.stringify(result));
       }
     }
+  };
+
+  findTask = ({
+    projects,
+    currentProject,
+    idTask,
+  }: {
+    projects: IFProject[];
+    currentProject: IFProject;
+    idTask: string;
+  }) => {
+    const idx = projects.indexOf(currentProject);
+    const tasks = projects[idx].tasks;
+    const task = tasks.find((x) => x.id === idTask);
+
+    return { idx, tasks, task };
   };
 
   setStatusSubTask = ({
@@ -139,9 +164,7 @@ class ServiceRedux {
     projectsLoaded: any;
   }) => {
     if (currentProject) {
-      const idx = projects.indexOf(currentProject);
-      const tasks = projects[idx].tasks;
-      const task = tasks.find((x) => x.id === idTask);
+      const { idx, tasks, task } = this.findTask({ projects, currentProject, idTask });
 
       if (task) {
         const idxTask = tasks.indexOf(task);
@@ -187,9 +210,7 @@ class ServiceRedux {
     projectsLoaded: any;
   }) => {
     if (currentProject) {
-      const idx = projects.indexOf(currentProject);
-      const tasks = projects[idx].tasks;
-      const task = tasks.find((x) => x.id === idTask);
+      const { idx, tasks, task } = this.findTask({ projects, currentProject, idTask });
 
       if (task) {
         const idxTask = tasks.indexOf(task);
@@ -225,9 +246,7 @@ class ServiceRedux {
     projectsLoaded: any;
   }) => {
     if (currentProject && addFiles) {
-      const idx = projects.indexOf(currentProject);
-      const tasks = projects[idx].tasks;
-      const task = tasks.find((x) => x.id === idTask);
+      const { idx, tasks, task } = this.findTask({ projects, currentProject, idTask });
 
       if (task) {
         const idxTask = tasks.indexOf(task);
