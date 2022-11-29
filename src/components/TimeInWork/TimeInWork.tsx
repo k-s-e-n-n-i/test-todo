@@ -15,39 +15,41 @@ const TimeInWork = ({ setTime }: Props) => {
   useEffect(() => setTime({ date: dateWork, timeStart, timeEnd }), [dateWork, timeStart, timeEnd]);
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'ru'}>
-      <DatePicker
-        label="дата"
-        value={dateWorkPicker}
-        inputFormat="DD.MM.YYYY"
-        onChange={(newValue) => {
-          setDateWorkPicker(newValue);
-          setDateWork(newValue ? newValue.format('YYYY-MM-DD') : new Date().toDateString());
-        }}
-        renderInput={(params) => <TextField {...params} />}
-        className="time-in-work"
-      />
+    <div className="time-in-work">
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'ru'}>
+        <DatePicker
+          label="дата"
+          value={dateWorkPicker}
+          inputFormat="DD.MM.YYYY"
+          onChange={(newValue) => {
+            setDateWorkPicker(newValue);
+            setDateWork(newValue ? newValue.format('YYYY-MM-DD') : new Date().toDateString());
+          }}
+          renderInput={(params) => <TextField {...params} />}
+          className="time-in-work__picker"
+        />
 
-      <TimePicker
-        label="начало"
-        value={timeStart}
-        onChange={(newValue) => {
-          setTimeStart(newValue);
-        }}
-        renderInput={(params) => <TextField {...params} />}
-        className="time-in-work"
-      />
+        <TimePicker
+          label="начало"
+          value={timeStart}
+          onChange={(newValue) => {
+            setTimeStart(newValue);
+          }}
+          renderInput={(params) => <TextField {...params} />}
+          className="time-in-work__picker"
+        />
 
-      <TimePicker
-        label="окончание"
-        value={timeEnd}
-        onChange={(newValue) => {
-          setTimeEnd(newValue);
-        }}
-        renderInput={(params) => <TextField {...params} />}
-        className="time-in-work"
-      />
-    </LocalizationProvider>
+        <TimePicker
+          label="окончание"
+          value={timeEnd}
+          onChange={(newValue) => {
+            setTimeEnd(newValue);
+          }}
+          renderInput={(params) => <TextField {...params} />}
+          className="time-in-work__picker"
+        />
+      </LocalizationProvider>
+    </div>
   );
 };
 
