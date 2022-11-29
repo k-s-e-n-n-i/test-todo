@@ -16,14 +16,7 @@ import { Checkbox, FormControlLabel, Input } from '@mui/material';
 import FileUpload from '../FileUpload/FileUpload';
 import CommentsBlock from '../CommentsBlock/CommentsBlock';
 
-const Task = ({
-  task,
-  currentProject,
-  projects,
-  projectsLoaded,
-  currentProjectUpdated,
-  commentsLoaded,
-}: Props) => {
+const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUpdated }: Props) => {
   const {
     id,
     numberTask,

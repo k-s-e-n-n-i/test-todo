@@ -71,8 +71,9 @@ const PageProject = ({ currentProject, projects, projectsLoaded, currentProjectU
           <Input value={search} placeholder="Поиск" onChange={(e) => setSearch(e.target.value)} />
         </div>
 
-        <div className="page-project__tasks">
         {listTask.length !== 0 ? <Dnd listColumns={listTask} getNewList={() => {}} /> : null}
+
+        <div className="page-project__tasks">
           {filterTasks.map((task, i) => (
             <Task task={task} key={i} />
           ))}

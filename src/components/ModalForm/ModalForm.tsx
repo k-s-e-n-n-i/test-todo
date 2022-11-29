@@ -1,5 +1,5 @@
 import React, { useState, ReactElement, Fragment } from 'react';
-import { Box, Modal, Grid, Button } from '@mui/material';
+import { Box, Modal, Button } from '@mui/material';
 import './ModalForm.scss';
 
 const ModalForm = ({

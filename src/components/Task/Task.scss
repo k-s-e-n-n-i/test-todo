@@ -1,10 +1,11 @@
 .task {
-  border: 2px solid #eee;
   padding: 0 15px 20px;
 
   &__main-block {
     display: grid;
-    grid-template-columns: 300px 300px auto;
+    grid-template-columns: 33% 33% 33%;
+    min-width: 800px;
+    width: max-content;
   }
 
   &__column {

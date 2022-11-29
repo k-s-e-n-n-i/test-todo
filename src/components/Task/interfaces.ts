@@ -6,5 +6,4 @@ export interface Props {
   projects: IFProject[];
   projectsLoaded: any;
   currentProjectUpdated: any;
-  commentsLoaded: any;
 }
