@@ -52,7 +52,7 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
                 checked={status === Statutes.Done}
                 onChange={(e) =>
                   Service.setStatusTask({
-                    newStatus: Statutes.Done,
+                    newStatus: status === Statutes.Done ? Statutes.Queue : Statutes.Done,
                     projects,
                     currentProject,
                     idTask: task.id,
