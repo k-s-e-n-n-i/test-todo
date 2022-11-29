@@ -7,6 +7,8 @@ import WithStore from '../../redux/hoc/WithStore';
 import { MapStateToProps } from '../../redux/services/MapStateToProps';
 import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
 import moment from 'moment';
+import ModalForm from '../ModalForm/ModalForm';
+import Task from '../Task/Task';
 
 const TaskShort = ({ task, projects, currentProjectUpdated }: Props) => {
   const { numberTask, title, status, dateEnd, priority } = task;
@@ -15,9 +17,13 @@ const TaskShort = ({ task, projects, currentProjectUpdated }: Props) => {
   return (
     <div className={`task-short`}>
       <h2>{`${numberTask}. ${title}`}</h2>
-      <p>{`Статус: ${status}`}</p>
       <p>{`Приоритет: ${priority}`}</p>
-      <p>{`Дата окончания: ${dateEnd ? moment(dateEnd).format('DD.MM.YYYY') : 'не указана'}`}</p>
+      <p>
+        {`Дата окончания: `}
+        <span>{dateEnd ? moment(dateEnd).format('DD.MM.YYYY') : 'не указана'}</span>
+      </p>
+
+      <ModalForm textButton="Просмотр" saved={() => {}} content={<Task task={task} />} />
     </div>
   );
 };

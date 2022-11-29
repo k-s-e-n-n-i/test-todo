@@ -4,6 +4,7 @@ import { Service } from '../../redux/services/ServiceRedux';
 import ContentFormTask from '../ContentFormTask/ContentFormTask';
 import ModalForm from '../ModalForm/ModalForm';
 import './Task.scss';
+import './Task-media.scss';
 import { IFFile, IFProject, IFTime } from '../../redux/initState/InterfacesState';
 import { connect } from 'react-redux';
 import WithStore from '../../redux/hoc/WithStore';

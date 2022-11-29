@@ -4,8 +4,7 @@
   &__main-block {
     display: grid;
     grid-template-columns: 33% 33% 33%;
-    min-width: 800px;
-    width: max-content;
+    width: 85vw;
   }
 
   &__column {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Props } from './interfaces';
 import './Dnd.scss';
+import './Dnd-media.scss';
 import styled from '@emotion/styled';
 import TaskShort from '../TaskShort/TaskShort';
 
