@@ -174,15 +174,13 @@ class ServiceRedux {
   };
 
   setStatusTask = ({
-    doneSubTask,
-    idSubTask,
+    newStatus,
     projects,
     currentProject,
     idTask,
     projectsLoaded,
   }: {
-    doneSubTask: boolean;
-    idSubTask: string;
+    newStatus: string;
     projects: IFProject[];
     currentProject: IFProject | undefined;
     idTask: string;
@@ -198,7 +196,7 @@ class ServiceRedux {
 
         const newTasks = [
           ...tasks.slice(0, idxTask),
-          Object.assign({}, task, { doneTask: !task.doneTask }),
+          Object.assign({}, task, { status: newStatus }),
           ...tasks.slice(idxTask + 1),
         ];
         const result = [

@@ -14,7 +14,7 @@ import { Service } from '../../redux/services/ServiceRedux';
 import { Input } from '@mui/material';
 import Dnd from '../../components/Dnd/Dnd';
 import { IFDndColumn } from '../../components/Dnd/interfaces';
-import { Statutes } from '../../redux/services/Constants';
+import { Statutes, StatutesTexts } from '../../redux/services/Constants';
 
 const PageProject = ({ currentProject, projects, projectsLoaded, currentProjectUpdated }: Props) => {
   Service.definedCurrentProject({ projects, currentProjectUpdated });
@@ -56,6 +56,21 @@ const PageProject = ({ currentProject, projects, projectsLoaded, currentProjectU
     }
   }, [filterTasks]);
 
+  useEffect(() => {
+    listTask.forEach((column, i) => {
+      const editStatusTask = column.items.find((x) => x.status !== StatutesTexts[i]);
+      if (editStatusTask) {
+        Service.setStatusTask({
+          newStatus: StatutesTexts[i],
+          projects,
+          currentProject,
+          idTask: editStatusTask.id,
+          projectsLoaded,
+        });
+      }
+    });
+  }, [listTask]);
+
   if (currentProject) {
     return (
       <div className="page-project">
@@ -71,7 +86,7 @@ const PageProject = ({ currentProject, projects, projectsLoaded, currentProjectU
           <Input value={search} placeholder="Поиск" onChange={(e) => setSearch(e.target.value)} />
         </div>
 
-        {listTask.length !== 0 ? <Dnd listColumns={listTask} getNewList={() => {}} /> : null}
+        {listTask.length !== 0 ? <Dnd listColumns={listTask} getNewList={setListTask} /> : null}
 
         <div className="page-project__tasks">
           {filterTasks.map((task, i) => (

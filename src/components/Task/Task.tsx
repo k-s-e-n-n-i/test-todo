@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import WithStore from '../../redux/hoc/WithStore';
 import { MapStateToProps } from '../../redux/services/MapStateToProps';
 import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
-import { PriorityTexts, StatutesTexts } from '../../redux/services/Constants';
+import { PriorityTexts, Statutes, StatutesTexts } from '../../redux/services/Constants';
 import moment from 'moment';
 import TimeInWork from '../TimeInWork/TimeInWork';
 import { Checkbox, FormControlLabel, Input } from '@mui/material';
@@ -65,8 +65,7 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
                 checked={doneTask}
                 onChange={(e) =>
                   Service.setStatusTask({
-                    doneSubTask: e.target.checked,
-                    idSubTask: id,
+                    newStatus: Statutes.Done,
                     projects,
                     currentProject,
                     idTask: task.id,

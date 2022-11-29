@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Props } from './interfaces';
 import './Dnd.scss';
@@ -49,6 +49,8 @@ const Dnd = ({ listColumns, getNewList }: Props) => {
       });
     }
   };
+
+  useEffect(() => getNewList(Object.values(columns)), [columns]);
 
   return (
     <div className="dnd">
