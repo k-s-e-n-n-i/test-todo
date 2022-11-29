@@ -12,7 +12,7 @@ import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
 import { PriorityTexts, Statutes, StatutesTexts } from '../../redux/services/Constants';
 import moment from 'moment';
 import TimeInWork from '../TimeInWork/TimeInWork';
-import { Checkbox, FormControlLabel, Input } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, Input } from '@mui/material';
 import FileUpload from '../FileUpload/FileUpload';
 import CommentsBlock from '../CommentsBlock/CommentsBlock';
 import EditForm from '../EditForm/EditForm';
@@ -226,11 +226,27 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
           <h3>Файлы:</h3>
           {files
             ? files.map((item, i) => (
-                <div key={i}>
-                  <a href={item.file} download={item.nameFile} target="_blank" rel="noreferrer">
-                    {item.nameFile}
-                  </a>
-                </div>
+                <Fragment>
+                  <div>
+                    <a href={item.file} download={item.nameFile} target="_blank" rel="noreferrer">
+                      {item.nameFile}
+                    </a>
+                    <Button
+                      onClick={() =>
+                        Service.deletedField({
+                          keyData: 'files',
+                          projects,
+                          currentProject,
+                          idTask: id,
+                          projectsLoaded,
+                          idxField: i,
+                        })
+                      }
+                    >
+                      X
+                    </Button>
+                  </div>
+                </Fragment>
               ))
             : null}
           <EditForm
