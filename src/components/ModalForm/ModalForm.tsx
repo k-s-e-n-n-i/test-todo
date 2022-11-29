@@ -1,5 +1,5 @@
 import React, { useState, ReactElement, Fragment } from 'react';
-import { Box, Modal, Button } from '@mui/material';
+import { Modal, Button } from '@mui/material';
 import './ModalForm.scss';
 
 const ModalForm = ({
@@ -12,19 +12,6 @@ const ModalForm = ({
   saved: any;
 }) => {
   const [open, setOpen] = useState(false);
-  const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    minWidth: 320,
-    bgcolor: 'background.paper',
-    border: '2px solid #eee',
-    boxShadow: 2,
-    pt: 2,
-    px: 4,
-    pb: 3,
-  };
 
   return (
     <Fragment>
@@ -37,8 +24,8 @@ const ModalForm = ({
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style }}>
-          <div className="modal-form">
+        <div className="modal-form">
+          <div className="modal-form__content">
             {content}
 
             <div className="modal-form__buttons">
@@ -53,7 +40,7 @@ const ModalForm = ({
               </Button>
             </div>
           </div>
-        </Box>
+        </div>
       </Modal>
     </Fragment>
   );
