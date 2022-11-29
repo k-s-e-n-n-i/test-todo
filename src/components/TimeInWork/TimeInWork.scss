@@ -1,8 +1,8 @@
 .time-in-work {
   display: flex;
-  flex-direction: column;
+  column-gap: 10px;
   row-gap: 10px;
-  margin-top: 20px;
+  margin: 20px 0 10px;
 
   &__picker {
     .MuiOutlinedInput-root {

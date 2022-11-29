@@ -1,4 +1,5 @@
-import { IFComment, IFFile, IFProject, IFTask, IFTime } from '../initState/InterfacesState';
+import moment from 'moment';
+import { IFComment, IFFile, IFProject, IFSubTask, IFTask, IFTime } from '../initState/InterfacesState';
 
 class ServiceRedux {
   getProjects = (projectsLoaded: any) => {
@@ -58,9 +59,9 @@ class ServiceRedux {
     projectsLoaded: any;
   }) => {
     if (time) {
-      const { date, timeStart, timeEnd } = time;
+      const { timeStart, timeEnd } = time;
       this.updatedTask({
-        newData: { date, timeStart, timeEnd },
+        newData: { timeStart, timeEnd },
         keyData: 'time',
         projects,
         currentProject,
@@ -293,6 +294,95 @@ class ServiceRedux {
     const newComment = { id: Date.now(), idProject, idTask, idParent, text, date: new Date().toString() };
     commentsLoaded([...comments, newComment]);
     localStorage.setItem('TODO-list-comments', JSON.stringify([...comments, newComment]));
+  };
+
+  editField = ({
+    keyData,
+    newData,
+    projects,
+    currentProject,
+    idTask,
+    projectsLoaded,
+    idxField,
+  }: {
+    keyData: 'time' | 'subTasks' | 'files';
+    newData: IFTime | IFSubTask | undefined;
+    projects: IFProject[];
+    currentProject: IFProject | undefined;
+    idTask: string;
+    projectsLoaded: any;
+    idxField: number;
+  }) => {
+    console.log('edit', idxField);
+    if (currentProject) {
+      const { idx, tasks, task } = this.findTask({ projects, currentProject, idTask });
+
+      if (task) {
+        const idxTask = tasks.indexOf(task);
+
+        const newArrData = [
+          ...task[keyData].slice(0, idxField),
+          Object.assign({}, task[keyData][idxField], newData),
+          ...task[keyData].slice(idxField + 1),
+        ];
+
+        const newTasks = [
+          ...projects[idx].tasks.slice(0, idxTask),
+          Object.assign({}, projects[idx].tasks[idxTask], { [keyData]: newArrData }),
+          ...projects[idx].tasks.slice(idxTask + 1),
+        ];
+        const result = [
+          ...projects.slice(0, idx),
+          Object.assign({}, projects[idx], { tasks: newTasks }),
+          ...projects.slice(idx + 1),
+        ];
+
+        projectsLoaded(result);
+        console.log(result);
+        localStorage.setItem('TODO-list-projects', JSON.stringify(result));
+      }
+    }
+  };
+
+  deletedField = ({
+    keyData,
+    projects,
+    currentProject,
+    idTask,
+    projectsLoaded,
+    idxField,
+  }: {
+    keyData: 'time' | 'subTasks' | 'files';
+    projects: IFProject[];
+    currentProject: IFProject | undefined;
+    idTask: string;
+    projectsLoaded: any;
+    idxField: number;
+  }) => {
+    if (currentProject) {
+      const { idx, tasks, task } = this.findTask({ projects, currentProject, idTask });
+
+      if (task) {
+        const idxTask = tasks.indexOf(task);
+
+        const newData = [...task[keyData].slice(0, idxField), ...task[keyData].slice(idxField + 1)];
+
+        const newTasks = [
+          ...projects[idx].tasks.slice(0, idxTask),
+          Object.assign({}, projects[idx].tasks[idxTask], { [keyData]: newData }),
+          ...projects[idx].tasks.slice(idxTask + 1),
+        ];
+        const result = [
+          ...projects.slice(0, idx),
+          Object.assign({}, projects[idx], { tasks: newTasks }),
+          ...projects.slice(idx + 1),
+        ];
+
+        projectsLoaded(result);
+        console.log(result);
+        localStorage.setItem('TODO-list-projects', JSON.stringify(result));
+      }
+    }
   };
 }
 

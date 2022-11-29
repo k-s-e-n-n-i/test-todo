@@ -1,7 +1,11 @@
 .edit-form {
+  &__line {
+    display: flex;
+  }
+
   &__buttons {
     display: flex;
     justify-content: flex-end;
-    margin-top: 20px;
+    margin-top: 10px;
   }
 }

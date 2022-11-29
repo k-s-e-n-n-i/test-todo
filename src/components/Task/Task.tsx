@@ -1,8 +1,7 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import { Props } from './interfaces';
 import { Service } from '../../redux/services/ServiceRedux';
 import ContentFormTask from '../ContentFormTask/ContentFormTask';
-import ModalForm from '../ModalForm/ModalForm';
 import './Task.scss';
 import './Task-media.scss';
 import { IFFile, IFProject, IFTime } from '../../redux/initState/InterfacesState';
@@ -13,7 +12,7 @@ import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
 import { PriorityTexts, Statutes, StatutesTexts } from '../../redux/services/Constants';
 import moment from 'moment';
 import TimeInWork from '../TimeInWork/TimeInWork';
-import { Button, Checkbox, FormControlLabel, Input } from '@mui/material';
+import { Checkbox, FormControlLabel, Input } from '@mui/material';
 import FileUpload from '../FileUpload/FileUpload';
 import CommentsBlock from '../CommentsBlock/CommentsBlock';
 import EditForm from '../EditForm/EditForm';
@@ -40,7 +39,7 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
       <div className="task__main-block">
         <div>
           <EditForm
-            buttonText="Редактировать"
+            buttonText="Ред"
             saved={() => Service.savedTask({ projects, projectsLoaded, currentProject, updatedProject })}
             contentMain={
               <Fragment>
@@ -67,8 +66,6 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
             }
           />
         </div>
-
-        <span></span>
 
         <div className="task__column">
           <FormControlLabel
@@ -100,12 +97,42 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
       <div className="task__main-block">
         <div>
           <h3>{`Время в работе: ${hour} ч. ${minutes} мин.`}</h3>
-          {time.map(({ date, timeStart, timeEnd }, i) => (
-            <p key={i}>
-              {`${moment(date).format('DD.MM.YY')} с ${moment(timeStart).format('HH:mm')} по ${moment(
-                timeEnd
-              ).format('HH:mm')}`}
-            </p>
+          {time.map(({ timeStart, timeEnd }, i) => (
+            <EditForm
+              key={i}
+              buttonText="Ред"
+              deleted={() =>
+                Service.deletedField({
+                  keyData: 'time',
+                  projects,
+                  currentProject,
+                  idTask: id,
+                  projectsLoaded,
+                  idxField: i,
+                })
+              }
+              contentMain={
+                <p>
+                  {`с ${moment(timeStart).format('DD.MM.YY HH:mm')} до ${moment(timeEnd).format(
+                    'DD.MM.YY HH:mm'
+                  )}`}
+                </p>
+              }
+              contentEdit={
+                <TimeInWork setTime={setAddTime} editTimeStart={timeStart} editTimeEnd={timeEnd} />
+              }
+              saved={() => {
+                Service.editField({
+                  keyData: 'time',
+                  newData: addTime,
+                  projects,
+                  currentProject,
+                  idTask: id,
+                  projectsLoaded,
+                  idxField: i,
+                });
+              }}
+            />
           ))}
           <EditForm
             buttonText="Добавить"
@@ -125,24 +152,52 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
         <div className="task__column">
           <h3>Подзадачи:</h3>
           {subTasks.map(({ name, done, id }, i) => (
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={done}
-                  onChange={(e) =>
-                    Service.setStatusSubTask({
-                      doneSubTask: e.target.checked,
-                      idSubTask: id,
-                      projects,
-                      currentProject,
-                      idTask: task.id,
-                      projectsLoaded,
-                    })
+            <EditForm
+              buttonText="Ред"
+              contentMain={
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={done}
+                      onChange={(e) =>
+                        Service.setStatusSubTask({
+                          doneSubTask: e.target.checked,
+                          idSubTask: id,
+                          projects,
+                          currentProject,
+                          idTask: task.id,
+                          projectsLoaded,
+                        })
+                      }
+                    />
                   }
+                  label={name}
+                  key={i}
                 />
               }
-              label={name}
-              key={i}
+              contentEdit={<FieldSubTask name={name} addSubTask={addSubTask} setAddSubTask={setAddSubTask} />}
+              saved={() => {
+                Service.editField({
+                  keyData: 'subTasks',
+                  newData: { name: addSubTask, done, id },
+                  projects,
+                  currentProject,
+                  idTask: task.id,
+                  projectsLoaded,
+                  idxField: i,
+                });
+                setAddSubTask('');
+              }}
+              deleted={() =>
+                Service.deletedField({
+                  keyData: 'subTasks',
+                  projects,
+                  currentProject,
+                  idTask: task.id,
+                  projectsLoaded,
+                  idxField: i,
+                })
+              }
             />
           ))}
           <EditForm
@@ -202,3 +257,18 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
 };
 
 export default WithStore()(connect(MapStateToProps, MapDispatchToProps)(Task));
+
+const FieldSubTask = ({
+  name,
+  addSubTask,
+  setAddSubTask,
+}: {
+  name: string;
+  addSubTask: string;
+  setAddSubTask: any;
+}) => {
+  useEffect(() => setAddSubTask(name), []);
+  return (
+    <Input value={addSubTask} placeholder="Наименование" onChange={(e) => setAddSubTask(e.target.value)} />
+  );
+};

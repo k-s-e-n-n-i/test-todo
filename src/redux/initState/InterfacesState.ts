@@ -26,13 +26,12 @@ export interface IFTask {
 }
 
 export interface IFTime {
-  date: Date;
   timeStart: Date;
   timeEnd: Date;
 }
 
 export interface IFSubTask {
-  name: string[];
+  name: string;
   done: boolean;
   id: number;
 }
