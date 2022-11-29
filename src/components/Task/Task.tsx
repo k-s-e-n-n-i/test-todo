@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Props } from './interfaces';
 import { Service } from '../../redux/services/ServiceRedux';
 import ContentFormTask from '../ContentFormTask/ContentFormTask';
@@ -16,6 +16,7 @@ import { Button, Checkbox, FormControlLabel, Input } from '@mui/material';
 import FileUpload from '../FileUpload/FileUpload';
 import CommentsBlock from '../CommentsBlock/CommentsBlock';
 import EditForm from '../EditForm/EditForm';
+import EditField from '../EditField/EditField';
 
 const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUpdated }: Props) => {
   const { id, numberTask, title, date, description, status, time, dateEnd, priority, subTasks, files } = task;
@@ -175,7 +176,7 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
                   key={i}
                 />
               }
-              contentEdit={<FieldSubTask name={name} addSubTask={addSubTask} setAddSubTask={setAddSubTask} />}
+              contentEdit={<EditField name={name} addSubTask={addSubTask} setAddSubTask={setAddSubTask} />}
               saved={() => {
                 Service.editField({
                   keyData: 'subTasks',
@@ -273,18 +274,3 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
 };
 
 export default WithStore()(connect(MapStateToProps, MapDispatchToProps)(Task));
-
-const FieldSubTask = ({
-  name,
-  addSubTask,
-  setAddSubTask,
-}: {
-  name: string;
-  addSubTask: string;
-  setAddSubTask: any;
-}) => {
-  useEffect(() => setAddSubTask(name), []);
-  return (
-    <Input value={addSubTask} placeholder="Наименование" onChange={(e) => setAddSubTask(e.target.value)} />
-  );
-};
