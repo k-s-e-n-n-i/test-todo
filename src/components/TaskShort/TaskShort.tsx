@@ -9,11 +9,11 @@ import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
 import moment from 'moment';
 
 const TaskShort = ({ task, projects, currentProjectUpdated }: Props) => {
-  const { numberTask, title, status, dateEnd, priority, doneTask } = task;
+  const { numberTask, title, status, dateEnd, priority } = task;
   Service.definedCurrentProject({ projects, currentProjectUpdated });
 
   return (
-    <div className={`task-short ${doneTask ? 'task-short__done' : ''}`}>
+    <div className={`task-short`}>
       <h2>{`${numberTask}. ${title}`}</h2>
       <p>{`Статус: ${status}`}</p>
       <p>{`Приоритет: ${priority}`}</p>

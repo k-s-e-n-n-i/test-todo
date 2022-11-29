@@ -76,7 +76,6 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
             dateEnd,
             priority: PriorityTexts[Number(priority)],
             subTasks: editTask.subTasks,
-            doneTask: editTask.doneTask,
             files: editTask.files,
           },
           ...project.tasks.slice(idxEditTask + 1),

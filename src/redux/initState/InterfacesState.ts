@@ -22,7 +22,6 @@ export interface IFTask {
   dateEnd: string;
   priority: string;
   subTasks: IFSubTask[];
-  doneTask: boolean;
   files: IFFile[];
 }
 

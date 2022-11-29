@@ -17,20 +17,7 @@ import FileUpload from '../FileUpload/FileUpload';
 import CommentsBlock from '../CommentsBlock/CommentsBlock';
 
 const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUpdated }: Props) => {
-  const {
-    id,
-    numberTask,
-    title,
-    date,
-    description,
-    status,
-    time,
-    dateEnd,
-    priority,
-    subTasks,
-    doneTask,
-    files,
-  } = task;
+  const { id, numberTask, title, date, description, status, time, dateEnd, priority, subTasks, files } = task;
   Service.definedCurrentProject({ projects, currentProjectUpdated });
 
   const [updatedProject, setUpdatedProject] = useState<IFProject>();
@@ -46,7 +33,7 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
   const minutes = Math.floor(sumMin - hour * 60);
 
   return (
-    <div className={`task ${doneTask ? 'task__done' : ''}`}>
+    <div className={`task ${status === Statutes.Done ? 'task__done' : ''}`}>
       <h2>{`${numberTask}. ${title}`}</h2>
       <div className="task__main-block">
         <div>
@@ -62,7 +49,7 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
             className="task__checkbox-done"
             control={
               <Checkbox
-                checked={doneTask}
+                checked={status === Statutes.Done}
                 onChange={(e) =>
                   Service.setStatusTask({
                     newStatus: Statutes.Done,
@@ -74,7 +61,7 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
                 }
               />
             }
-            label={doneTask ? 'Задача завершена' : 'Завершить задачу'}
+            label={status === Statutes.Done ? 'Задача завершена' : 'Завершить задачу'}
           />
 
           <ModalForm
