@@ -313,7 +313,6 @@ class ServiceRedux {
     projectsLoaded: any;
     idxField: number;
   }) => {
-    console.log('edit', idxField);
     if (currentProject) {
       const { idx, tasks, task } = this.findTask({ projects, currentProject, idTask });
 
@@ -338,7 +337,6 @@ class ServiceRedux {
         ];
 
         projectsLoaded(result);
-        console.log(result);
         localStorage.setItem('TODO-list-projects', JSON.stringify(result));
       }
     }
@@ -383,6 +381,42 @@ class ServiceRedux {
         localStorage.setItem('TODO-list-projects', JSON.stringify(result));
       }
     }
+  };
+
+  editProject = ({
+    projects,
+    idx,
+    newName,
+    projectsLoaded,
+  }: {
+    projects: IFProject[];
+    idx: number;
+    newName: string;
+    projectsLoaded: any;
+  }) => {
+    const result = [
+      ...projects.slice(0, idx),
+      Object.assign({}, projects[idx], { name: newName }),
+      ...projects.slice(idx + 1),
+    ];
+
+    projectsLoaded(result);
+    localStorage.setItem('TODO-list-projects', JSON.stringify(result));
+  };
+
+  deletedProject = ({
+    projects,
+    idx,
+    projectsLoaded,
+  }: {
+    projects: IFProject[];
+    idx: number;
+    projectsLoaded: any;
+  }) => {
+    const result = [...projects.slice(0, idx), ...projects.slice(idx + 1)];
+
+    projectsLoaded(result);
+    localStorage.setItem('TODO-list-projects', JSON.stringify(result));
   };
 }
 

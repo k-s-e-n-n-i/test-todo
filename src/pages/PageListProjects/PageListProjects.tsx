@@ -11,6 +11,9 @@ import './PageListProjects.scss';
 import { Input } from '@mui/material';
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 import ModalForm from '../../components/ModalForm/ModalForm';
+import EditForm from '../../components/EditForm/EditForm';
+import EditField from '../../components/EditField/EditField';
+import { Service } from '../../redux/services/ServiceRedux';
 
 const PageListProjects = ({ projects, projectsLoaded, currentProjectUpdated }: Props) => {
   const [nameNewProject, setNameNewProject] = useState('');
@@ -26,9 +29,33 @@ const PageListProjects = ({ projects, projectsLoaded, currentProjectUpdated }: P
       <Breadcrumbs />
 
       {projects.map((proj, i) => (
-        <Link to={`/project-${proj.id}`} onClick={() => currentProjectUpdated(proj)} key={i}>
-          {proj.name}
-        </Link>
+        <EditForm
+          buttonText="Ред"
+          contentMain={
+            <Link to={`/project-${proj.id}`} onClick={() => currentProjectUpdated(proj)} key={i}>
+              {proj.name}
+            </Link>
+          }
+          contentEdit={
+            <EditField name={proj.name} addSubTask={nameNewProject} setAddSubTask={setNameNewProject} />
+          }
+          saved={() => {
+            Service.editProject({
+              projects,
+              projectsLoaded,
+              idx: i,
+              newName: nameNewProject,
+            });
+            setNameNewProject('');
+          }}
+          deleted={() =>
+            Service.deletedProject({
+              projects,
+              projectsLoaded,
+              idx: i,
+            })
+          }
+        />
       ))}
 
       <ModalForm
