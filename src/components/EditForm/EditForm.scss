@@ -1,6 +1,13 @@
 .edit-form {
+  width: 100%;
+
+  &__content {
+    width: 100%;
+  }
+
   &__line {
-    display: flex;
+    display: grid;
+    grid-template-columns: 70% auto auto;
   }
 
   &__buttons {
