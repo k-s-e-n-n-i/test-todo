@@ -62,6 +62,7 @@ const PageListProjects = ({ projects, projectsLoaded, currentProjectUpdated }: P
         textButton="Добавить проект"
         content={<Input placeholder="Наименование" onChange={(e) => setNameNewProject(e.target.value)} />}
         saved={() => savedProject()}
+        id="addProject"
       />
     </div>
   );
