@@ -15,22 +15,6 @@ import Dnd from '../../components/Dnd/Dnd';
 import { IFDndColumn } from '../../components/Dnd/interfaces';
 import { Statutes, StatutesTexts } from '../../redux/services/Constants';
 import Task from '../../components/Task/Task';
-import TaskShort from '../../components/TaskShort/TaskShort';
-
-const defaultColumnsDnd = [
-  {
-    title: Statutes.Queue,
-    items: [],
-  },
-  {
-    title: Statutes.Development,
-    items: [],
-  },
-  {
-    title: Statutes.Done,
-    items: [],
-  },
-];
 
 const PageProject = ({
   currentProject,
@@ -45,7 +29,7 @@ const PageProject = ({
   const [updatedProject, setUpdatedProject] = useState<IFProject>();
   const [search, setSearch] = useState('');
   const [filterTasks, setFilterTasks] = useState<IFTask[]>(currentProject?.tasks || []);
-  const [listTask, setListTask] = useState<IFDndColumn[]>(defaultColumnsDnd);
+  const [listTask, setListTask] = useState<IFDndColumn[]>([]);
 
   useEffect(() => {
     if (currentProject) {
@@ -61,24 +45,20 @@ const PageProject = ({
   }, [search]);
 
   useEffect(() => {
-    if (filterTasks.length === 0) {
-      setListTask(defaultColumnsDnd);
-    } else {
-      setListTask([
-        {
-          title: Statutes.Queue,
-          items: filterTasks.filter((x) => x.status === Statutes.Queue),
-        },
-        {
-          title: Statutes.Development,
-          items: filterTasks.filter((x) => x.status === Statutes.Development),
-        },
-        {
-          title: Statutes.Done,
-          items: filterTasks.filter((x) => x.status === Statutes.Done),
-        },
-      ]);
-    }
+    setListTask([
+      {
+        title: Statutes.Queue,
+        items: filterTasks.filter((x) => x.status === Statutes.Queue),
+      },
+      {
+        title: Statutes.Development,
+        items: filterTasks.filter((x) => x.status === Statutes.Development),
+      },
+      {
+        title: Statutes.Done,
+        items: filterTasks.filter((x) => x.status === Statutes.Done),
+      },
+    ]);
   }, [filterTasks]);
 
   useEffect(() => {
