@@ -11,7 +11,7 @@ import ModalForm from '../ModalForm/ModalForm';
 import Task from '../Task/Task';
 
 const TaskShort = ({ task, projects, currentProjectUpdated }: Props) => {
-  const { numberTask, title, status, dateEnd, priority } = task;
+  const { numberTask, title, dateEnd, priority } = task;
   Service.definedCurrentProject({ projects, currentProjectUpdated });
 
   return (
@@ -23,7 +23,7 @@ const TaskShort = ({ task, projects, currentProjectUpdated }: Props) => {
         <span>{dateEnd ? moment(dateEnd).format('DD.MM.YYYY') : 'не указана'}</span>
       </p>
 
-      <ModalForm textButton="Просмотр" saved={() => {}} content={<Task task={task} />} />
+      <ModalForm textButton="Просмотр" saved={() => {}} content={<Task task={task} />} id={task.id} />
     </div>
   );
 };
