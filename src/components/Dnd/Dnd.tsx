@@ -42,13 +42,15 @@ const Dnd = ({ columns, setColumns }: Props) => {
       const copiedItems = [...column.items];
       const [removed] = copiedItems.splice(source.index, 1);
       copiedItems.splice(destination.index, 0, removed);
-      setColumns({
-        ...columns,
-        [source.droppableId]: {
-          ...column,
-          items: copiedItems,
-        },
-      });
+      setColumns(
+        Object.values({
+          ...columns,
+          [source.droppableId]: {
+            ...column,
+            items: copiedItems,
+          },
+        })
+      );
     }
   };
 
