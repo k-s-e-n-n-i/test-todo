@@ -69,6 +69,7 @@ const CommentsBlock = ({ comments, commentsLoaded, currentProject, idTask }: Pro
                 text: addComment,
               });
               setAddComment('');
+              setShowFormAddComment(0);
             }}
           >
             Сохранить
