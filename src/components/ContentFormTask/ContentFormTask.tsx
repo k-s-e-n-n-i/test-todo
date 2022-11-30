@@ -12,6 +12,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { StatutesTexts, PriorityTexts } from '../../redux/services/Constants';
 import moment from 'moment';
 import { IFTask } from '../../redux/initState/InterfacesState';
+import { Editor } from '@tinymce/tinymce-react';
 
 const defaultDataForm: IFStateTask = {
   id: '0',
@@ -96,10 +97,6 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
         <InputLabel>Заголовок:</InputLabel>
         <Input value={title} placeholder="Заголовок" onChange={(e) => setTitle(e.target.value)} />
       </div>
-      <div className="content-form-task__line">
-        <InputLabel>Описание:</InputLabel>
-        <Input value={description} placeholder="Описание" onChange={(e) => setDescription(e.target.value)} />
-      </div>
 
       <div className="content-form-task__line">
         <InputLabel>Статус:</InputLabel>
@@ -135,6 +132,11 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
           <MenuItem value={1}>Средний</MenuItem>
           <MenuItem value={2}>Высокий</MenuItem>
         </Select>
+      </div>
+
+      <div className="content-form-task__editor">
+        <InputLabel>Описание:</InputLabel>
+        <Editor value={description} onEditorChange={(e) => setDescription(e)} />
       </div>
     </div>
   );
