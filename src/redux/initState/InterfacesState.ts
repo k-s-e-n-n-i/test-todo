@@ -2,6 +2,7 @@ export interface IFProjectState {
   projects: IFProject[];
   currentProject: IFProject | undefined;
   comments: IFComment[];
+  modal: string;
 }
 
 export interface IFProject {

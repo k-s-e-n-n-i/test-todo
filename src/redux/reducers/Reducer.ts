@@ -8,6 +8,8 @@ const reducer = (state: any = ProjectState, action: { type: string; payload: obj
       return { ...state, currentProject: action.payload };
     case 'COMMENTS_LOADED':
       return { ...state, comments: action.payload };
+    case 'MODAL_UPDATED':
+      return { ...state, modal: action.payload };
 
     default:
       return state;

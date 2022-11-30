@@ -4,4 +4,5 @@ export const ProjectState: IFProjectState = {
   projects: [],
   currentProject: undefined,
   comments: [],
+  modal: '',
 };
