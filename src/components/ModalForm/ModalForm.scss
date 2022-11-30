@@ -11,6 +11,7 @@
   max-height: 90vh;
   width: 85vw;
   overflow-y: scroll;
+  z-index: 1;
 
   &__buttons {
     display: flex;

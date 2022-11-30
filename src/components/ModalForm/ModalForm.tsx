@@ -1,38 +1,27 @@
-import React, { useState, ReactElement, Fragment } from 'react';
-import { Modal, Button } from '@mui/material';
+import React, { Fragment } from 'react';
+import { Props } from './interfaces';
+import { Button } from '@mui/material';
 import './ModalForm.scss';
+import WithStore from '../../redux/hoc/WithStore';
+import { connect } from 'react-redux';
+import { MapStateToProps } from '../../redux/services/MapStateToProps';
+import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
 
-const ModalForm = ({
-  textButton,
-  content,
-  saved,
-}: {
-  textButton: string;
-  content: ReactElement;
-  saved: any;
-}) => {
-  const [open, setOpen] = useState(false);
-
+const ModalForm = ({ textButton, content, saved, modal, modalUpdated, id }: Props) => {
   return (
     <Fragment>
-      <Button onClick={() => setOpen(true)}>{textButton}</Button>
+      <Button onClick={() => modalUpdated(id)}>{textButton}</Button>
 
-      <Modal
-        hideBackdrop
-        open={open}
-        onClose={() => setOpen(false)}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
-      >
+      {modal === id ? (
         <div className="modal-form">
           <div className="modal-form__content">
             {content}
 
             <div className="modal-form__buttons">
-              <Button onClick={() => setOpen(false)}>Отменить</Button>
+              <Button onClick={() => modalUpdated('')}>Отменить</Button>
               <Button
                 onClick={() => {
-                  setOpen(false);
+                  modalUpdated('');
                   saved();
                 }}
               >
@@ -41,9 +30,9 @@ const ModalForm = ({
             </div>
           </div>
         </div>
-      </Modal>
+      ) : null}
     </Fragment>
   );
 };
 
-export default ModalForm;
+export default WithStore()(connect(MapStateToProps, MapDispatchToProps)(ModalForm));
