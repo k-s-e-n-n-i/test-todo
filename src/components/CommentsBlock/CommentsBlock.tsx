@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Props } from './interfaces';
 import './CommentsBlock.scss';
-import { Input } from '@mui/material';
-import ModalForm from '../ModalForm/ModalForm';
+import { Button, Input } from '@mui/material';
 import { Service } from '../../redux/services/ServiceRedux';
 import WithStore from '../../redux/hoc/WithStore';
 import { connect } from 'react-redux';
@@ -14,6 +13,7 @@ import moment from 'moment';
 const CommentsBlock = ({ comments, commentsLoaded, currentProject, idTask }: Props) => {
   const [idProject, setIdProject] = useState(0);
   const [addComment, setAddComment] = useState('');
+  const [showFormAddComment, setShowFormAddComment] = useState(0);
 
   useEffect(() => {
     if (currentProject) {
@@ -23,34 +23,55 @@ const CommentsBlock = ({ comments, commentsLoaded, currentProject, idTask }: Pro
 
   const inProject: IFComment[] = comments.filter((x) => x.idProject === idProject);
   const inTask: IFComment[] = inProject.filter((x) => x.idTask === idTask);
-  const inTask0: IFComment[] = inTask.filter((x) => x.idParent === 0);
+  const inTask0: IFComment[] = inTask.filter((x) => x.idParent === 1);
 
-  const modalAddComment = (idParent: number) => {
+  const buttonAddComment = (idParent: number) => {
     return (
-      <ModalForm
-        textButton="Добавить комментарий"
-        saved={() => {
-          Service.addedComment({
-            comments,
-            commentsLoaded,
-            idProject,
-            idTask,
-            idParent,
-            text: addComment,
-          });
-          setAddComment('');
+      <Button
+        onClick={() => {
+          setShowFormAddComment(idParent);
         }}
-        content={
-          <div>
-            <h3>Комментарий</h3>
-            <Input
-              value={addComment}
-              placeholder="Текст комментария"
-              onChange={(e) => setAddComment(e.target.value)}
-            />
-          </div>
-        }
-      />
+      >
+        Добавить комментарий
+      </Button>
+    );
+  };
+
+  const formAddComment = (idParent: number) => {
+    return (
+      <div>
+        <Input
+          value={addComment}
+          placeholder="Текст комментария"
+          onChange={(e) => setAddComment(e.target.value)}
+        />
+
+        <div className="modal-form__buttons">
+          <Button
+            onClick={() => {
+              setAddComment('');
+              setShowFormAddComment(0);
+            }}
+          >
+            Отменить
+          </Button>
+          <Button
+            onClick={() => {
+              Service.addedComment({
+                comments,
+                commentsLoaded,
+                idProject,
+                idTask,
+                idParent,
+                text: addComment,
+              });
+              setAddComment('');
+            }}
+          >
+            Сохранить
+          </Button>
+        </div>
+      </div>
     );
   };
 
@@ -61,8 +82,9 @@ const CommentsBlock = ({ comments, commentsLoaded, currentProject, idTask }: Pro
     return (
       <div className="comments__item">
         <span>{moment(date).format('HH:mm:ss DD.MM.YYYY')}</span>
-        {modalAddComment(id)}
+        {buttonAddComment(id)}
         <p>{text}</p>
+        {showFormAddComment === id ? formAddComment(id) : null}
 
         {children ? (
           <div className="comments__item-child">
@@ -81,7 +103,8 @@ const CommentsBlock = ({ comments, commentsLoaded, currentProject, idTask }: Pro
       {inTask0.map((item, i) => (
         <div key={i}>{commentBlock(item)}</div>
       ))}
-      {modalAddComment(0)}
+      {buttonAddComment(1)}
+      {showFormAddComment === 1 ? formAddComment(1) : null}
     </div>
   );
 };
