@@ -17,8 +17,8 @@ const TaskShort = ({ task, projects, currentProjectUpdated }: Props) => {
   return (
     <div className={`task-short`}>
       <h2>{`${numberTask}. ${title}`}</h2>
-      <p>{`Приоритет: ${priority}`}</p>
-      <p>
+      <p className="task-short__text">{`Приоритет: ${priority}`}</p>
+      <p className="task-short__text">
         {`Дата окончания: `}
         <span>{dateEnd ? moment(dateEnd).format('DD.MM.YYYY') : 'не указана'}</span>
       </p>

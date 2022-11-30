@@ -1,6 +1,9 @@
 .task-short {
   padding: 0 15px 20px;
-  font-size: 12px;
+
+  &__text {
+    font-size: 12px;
+  }
 
   h2,
   p {

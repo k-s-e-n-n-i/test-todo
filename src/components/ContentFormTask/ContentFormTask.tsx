@@ -34,8 +34,6 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
   );
   const [dateEnd, setDateEnd] = useState(startData.dateEnd ? new Date(startData.dateEnd).toDateString() : '');
   const [status, setStatus] = useState(startData.status);
-  const [timeH, setTimeH] = useState(startData.time.hour);
-  const [timeM, setTimeM] = useState(startData.time.minutes);
   const [priority, setPriority] = useState(startData.priority);
 
   useEffect(() => {
@@ -89,7 +87,7 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
       name: project.name,
       tasks: editData ? editTasks : addTasks,
     });
-  }, [title, description, dateEnd, status, timeH, timeM, priority]);
+  }, [title, description, dateEnd, status, priority]);
 
   return (
     <div className="content-form-task">
@@ -108,17 +106,20 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
       </div>
 
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'ru'}>
-        <DatePicker
-          label="дата окончания"
-          value={dateEndPicker}
-          inputFormat="DD.MM.YYYY"
-          onChange={(newValue) => {
-            setDateEndPicker(newValue);
-            setDateEnd(newValue ? newValue.format('YYYY-MM-DD') : new Date().toDateString());
-          }}
-          renderInput={(params) => <TextField {...params} />}
-          className="content-form-task__datepicker"
-        />
+        <div className="content-form-task__line">
+          <InputLabel>Дата окончания:</InputLabel>
+          <DatePicker
+            label="дата окончания"
+            value={dateEndPicker}
+            inputFormat="DD.MM.YYYY"
+            onChange={(newValue) => {
+              setDateEndPicker(newValue);
+              setDateEnd(newValue ? newValue.format('YYYY-MM-DD') : new Date().toDateString());
+            }}
+            renderInput={(params) => <TextField {...params} />}
+            className="content-form-task__datepicker"
+          />
+        </div>
       </LocalizationProvider>
 
       <div className="content-form-task__line">
