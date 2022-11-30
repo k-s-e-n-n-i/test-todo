@@ -6,7 +6,7 @@ import './Dnd-media.scss';
 import styled from '@emotion/styled';
 import TaskShort from '../TaskShort/TaskShort';
 
-const Dnd = ({ listColumns, getNewList }: Props) => {
+const Dnd = ({ columns, setColumns }: Props) => {
   const TaskColumnStyles = styled.div`
     margin: 8px;
     display: flex;
@@ -14,7 +14,6 @@ const Dnd = ({ listColumns, getNewList }: Props) => {
     min-height: 80vh;
   `;
 
-  const [columns, setColumns] = useState(listColumns);
   const onDragEnd = (result: any, columns: any, setColumns: any) => {
     if (!result.destination) return;
     const { source, destination } = result;
@@ -25,17 +24,19 @@ const Dnd = ({ listColumns, getNewList }: Props) => {
       const destItems = [...destColumn.items];
       const [removed] = sourceItems.splice(source.index, 1);
       destItems.splice(destination.index, 0, removed);
-      setColumns({
-        ...columns,
-        [source.droppableId]: {
-          ...sourceColumn,
-          items: sourceItems,
-        },
-        [destination.droppableId]: {
-          ...destColumn,
-          items: destItems,
-        },
-      });
+      setColumns(
+        Object.values({
+          ...columns,
+          [source.droppableId]: {
+            ...sourceColumn,
+            items: sourceItems,
+          },
+          [destination.droppableId]: {
+            ...destColumn,
+            items: destItems,
+          },
+        })
+      );
     } else {
       const column = columns[source.droppableId];
       const copiedItems = [...column.items];
@@ -50,8 +51,6 @@ const Dnd = ({ listColumns, getNewList }: Props) => {
       });
     }
   };
-
-  useEffect(() => getNewList(Object.values(columns)), [columns]);
 
   return (
     <div className="dnd">

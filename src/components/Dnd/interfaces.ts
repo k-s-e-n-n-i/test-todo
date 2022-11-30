@@ -1,6 +1,6 @@
 export interface Props {
-  listColumns: IFDndColumn[];
-  getNewList: any;
+  columns: IFDndColumn[];
+  setColumns: any;
 }
 
 export interface IFDndColumn {

@@ -17,13 +17,28 @@ import { IFDndColumn } from '../../components/Dnd/interfaces';
 import { Statutes, StatutesTexts } from '../../redux/services/Constants';
 import TableTasks from '../../components/TableTasks/TableTasks';
 
+const defaultColumnsDnd = [
+  {
+    title: Statutes.Queue,
+    items: [],
+  },
+  {
+    title: Statutes.Development,
+    items: [],
+  },
+  {
+    title: Statutes.Done,
+    items: [],
+  },
+];
+
 const PageProject = ({ currentProject, projects, projectsLoaded, currentProjectUpdated }: Props) => {
   Service.definedCurrentProject({ projects, currentProjectUpdated });
 
   const [updatedProject, setUpdatedProject] = useState<IFProject>();
   const [search, setSearch] = useState('');
   const [filterTasks, setFilterTasks] = useState<IFTask[]>(currentProject?.tasks || []);
-  const [listTask, setListTask] = useState<IFDndColumn[]>([]);
+  const [listTask, setListTask] = useState<IFDndColumn[]>(defaultColumnsDnd);
 
   useEffect(() => {
     if (currentProject) {
@@ -39,7 +54,9 @@ const PageProject = ({ currentProject, projects, projectsLoaded, currentProjectU
   }, [search]);
 
   useEffect(() => {
-    if (filterTasks.length !== 0) {
+    if (filterTasks.length === 0) {
+      setListTask(defaultColumnsDnd);
+    } else {
       setListTask([
         {
           title: Statutes.Queue,
@@ -87,7 +104,9 @@ const PageProject = ({ currentProject, projects, projectsLoaded, currentProjectU
           <Input value={search} placeholder="Поиск" onChange={(e) => setSearch(e.target.value)} />
         </div>
 
-        {listTask.length !== 0 ? <Dnd listColumns={listTask} getNewList={setListTask} /> : null}
+        {listTask.length !== 0 ? (
+          <Dnd columns={listTask} setColumns={(data: IFDndColumn[]) => setListTask(data)} />
+        ) : null}
 
         <TableTasks listColumns={listTask} getNewList={setListTask} />
       </div>
