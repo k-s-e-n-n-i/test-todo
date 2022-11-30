@@ -13,24 +13,27 @@ const ModalForm = ({ textButton, content, saved, modal, modalUpdated, id }: Prop
       <Button onClick={() => modalUpdated(id)}>{textButton}</Button>
 
       {modal === id ? (
-        <form className="modal-form">
-          <div className="modal-form__content">
-            {content}
+        <Fragment>
+          <div className="modal-form-bg" onClick={() => modalUpdated('')}></div>
+          <form className="modal-form">
+            <div className="modal-form__content">
+              {content}
 
-            <div className="modal-form__buttons">
-              <Button onClick={() => modalUpdated('')}>Отменить</Button>
-              <Button
-                type="submit"
-                onClick={() => {
-                  modalUpdated('');
-                  saved();
-                }}
-              >
-                Сохранить
-              </Button>
+              <div className="modal-form__buttons">
+                <Button onClick={() => modalUpdated('')}>Отменить</Button>
+                <Button
+                  type="submit"
+                  onClick={() => {
+                    modalUpdated('');
+                    saved();
+                  }}
+                >
+                  Сохранить
+                </Button>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </Fragment>
       ) : null}
     </Fragment>
   );
