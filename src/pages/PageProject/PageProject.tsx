@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import './PageProject.scss';
 import { Props } from './interfaces';
 import { connect } from 'react-redux';
@@ -10,10 +10,12 @@ import ModalForm from '../../components/ModalForm/ModalForm';
 import { IFProject, IFTask } from '../../redux/initState/InterfacesState';
 import ContentFormTask from '../../components/ContentFormTask/ContentFormTask';
 import { Service } from '../../redux/services/ServiceRedux';
-import { Input } from '@mui/material';
+import { Button, Input } from '@mui/material';
 import Dnd from '../../components/Dnd/Dnd';
 import { IFDndColumn } from '../../components/Dnd/interfaces';
 import { Statutes, StatutesTexts } from '../../redux/services/Constants';
+import Task from '../../components/Task/Task';
+import TaskShort from '../../components/TaskShort/TaskShort';
 
 const defaultColumnsDnd = [
   {
@@ -30,7 +32,14 @@ const defaultColumnsDnd = [
   },
 ];
 
-const PageProject = ({ currentProject, projects, projectsLoaded, currentProjectUpdated }: Props) => {
+const PageProject = ({
+  currentProject,
+  projects,
+  projectsLoaded,
+  currentProjectUpdated,
+  modal,
+  modalUpdated,
+}: Props) => {
   Service.definedCurrentProject({ projects, currentProjectUpdated });
 
   const [updatedProject, setUpdatedProject] = useState<IFProject>();
@@ -104,6 +113,24 @@ const PageProject = ({ currentProject, projects, projectsLoaded, currentProjectU
 
         {listTask.length !== 0 ? (
           <Dnd columns={listTask} setColumns={(data: IFDndColumn[]) => setListTask(data)} />
+        ) : null}
+
+        {modal !== '' && modal !== undefined ? (
+          <Fragment>
+            <div className="modal-form-bg" onClick={() => modalUpdated('')}></div>
+            <form className="modal-form">
+              <div className="modal-form__content">
+                <Task task={filterTasks.find((x) => x.id === modal)} />
+
+                <div className="modal-form__buttons">
+                  <Button onClick={() => modalUpdated('')}>Отменить</Button>
+                  <Button type="submit" onClick={() => modalUpdated('')}>
+                    Сохранить
+                  </Button>
+                </div>
+              </div>
+            </form>
+          </Fragment>
         ) : null}
       </div>
     );

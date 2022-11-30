@@ -5,4 +5,5 @@ export interface Props {
   projects: IFProject[];
   currentProjectUpdated: any;
   commentsLoaded: any;
+  modalUpdated: any;
 }
