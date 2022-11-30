@@ -1,7 +1,7 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Props } from './interfaces';
 import './CommentsBlock.scss';
-import { Button, Input } from '@mui/material';
+import { Button } from '@mui/material';
 import { Service } from '../../redux/services/ServiceRedux';
 import WithStore from '../../redux/hoc/WithStore';
 import { connect } from 'react-redux';
@@ -40,13 +40,16 @@ const CommentsBlock = ({ comments, commentsLoaded, currentProject, idTask }: Pro
   const formAddComment = (idParent: number) => {
     return (
       <div>
-        <Input
+        <textarea
           value={addComment}
           placeholder="Текст комментария"
           onChange={(e) => setAddComment(e.target.value)}
+          className="comments__textarea"
+          maxLength={1000}
         />
+        <p className="comments__symbols">{`Символов: ${1000 - addComment.length}`}</p>
 
-        <div className="modal-form__buttons">
+        <div className="comments__buttons">
           <Button
             onClick={() => {
               setAddComment('');
