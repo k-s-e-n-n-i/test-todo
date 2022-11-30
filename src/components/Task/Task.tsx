@@ -150,6 +150,7 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
           <h3>Подзадачи:</h3>
           {subTasks.map(({ name, done, id }, i) => (
             <EditForm
+              key={i}
               buttonText="Ред"
               contentMain={
                 <FormControlLabel
@@ -169,7 +170,6 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
                     />
                   }
                   label={name}
-                  key={i}
                 />
               }
               contentEdit={<EditField name={name} addSubTask={addSubTask} setAddSubTask={setAddSubTask} />}
@@ -223,7 +223,7 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
           <h3>Файлы:</h3>
           {files
             ? files.map((item, i) => (
-                <Fragment>
+                <Fragment key={i}>
                   <div>
                     <a href={item.file} download={item.nameFile} target="_blank" rel="noreferrer">
                       {item.nameFile}
