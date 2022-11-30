@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './PageProject.scss';
 import { Props } from './interfaces';
-import Task from '../../components/Task/Task';
 import { connect } from 'react-redux';
 import WithStore from '../../redux/hoc/WithStore';
 import { MapStateToProps } from '../../redux/services/MapStateToProps';
@@ -15,7 +14,6 @@ import { Input } from '@mui/material';
 import Dnd from '../../components/Dnd/Dnd';
 import { IFDndColumn } from '../../components/Dnd/interfaces';
 import { Statutes, StatutesTexts } from '../../redux/services/Constants';
-import TableTasks from '../../components/TableTasks/TableTasks';
 
 const defaultColumnsDnd = [
   {
@@ -107,8 +105,6 @@ const PageProject = ({ currentProject, projects, projectsLoaded, currentProjectU
         {listTask.length !== 0 ? (
           <Dnd columns={listTask} setColumns={(data: IFDndColumn[]) => setListTask(data)} />
         ) : null}
-
-        <TableTasks listColumns={listTask} getNewList={setListTask} />
       </div>
     );
   }
