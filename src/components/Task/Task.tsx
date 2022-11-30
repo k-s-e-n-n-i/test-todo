@@ -37,38 +37,36 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
   return (
     <div className={`task ${status === Statutes.Done ? 'task__done' : ''}`}>
       <h2>{`${numberTask}. ${title}`}</h2>
-      <div className="task__main-block">
-        <div>
-          <EditForm
-            buttonText="Ред"
-            saved={() => Service.savedTask({ projects, projectsLoaded, currentProject, updatedProject })}
-            contentMain={
-              <Fragment>
-                <p>{`Создано: ${date}`}</p>
-                <p>{`Статус: ${status}`}</p>
-                <p>{`Приоритет: ${priority}`}</p>
-                <p>{`Дата окончания: ${dateEnd ? moment(dateEnd).format('DD.MM.YYYY') : 'не указана'}`}</p>
-              </Fragment>
-            }
-            contentEdit={
-              <ContentFormTask
-                project={currentProject}
-                setUpdatedProject={setUpdatedProject}
-                editData={{
-                  id,
-                  title,
-                  description,
-                  dateEnd,
-                  status: StatutesTexts.indexOf(status),
-                  time,
-                  priority: PriorityTexts.indexOf(priority),
-                }}
-              />
-            }
-          />
-        </div>
+      <div className="task__">
+        <EditForm
+          buttonText="Редактировать основную информацию"
+          saved={() => Service.savedTask({ projects, projectsLoaded, currentProject, updatedProject })}
+          contentMain={
+            <Fragment>
+              <p>{`Создано: ${date}`}</p>
+              <p>{`Статус: ${status}`}</p>
+              <p>{`Приоритет: ${priority}`}</p>
+              <p>{`Дата окончания: ${dateEnd ? moment(dateEnd).format('DD.MM.YYYY') : 'не указана'}`}</p>
+            </Fragment>
+          }
+          contentEdit={
+            <ContentFormTask
+              project={currentProject}
+              setUpdatedProject={setUpdatedProject}
+              editData={{
+                id,
+                title,
+                description,
+                dateEnd,
+                status: StatutesTexts.indexOf(status),
+                time,
+                priority: PriorityTexts.indexOf(priority),
+              }}
+            />
+          }
+        />
 
-        <div className="task__column">
+        <div className="task__closed-task">
           <FormControlLabel
             className="task__checkbox-done"
             control={
@@ -90,10 +88,8 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
         </div>
       </div>
 
-      <p>
-        <span>Описание: </span>
-        {description}
-      </p>
+      <h3>Описание: </h3>
+      <p dangerouslySetInnerHTML={{ __html: description }}></p>
 
       <div className="task__main-block">
         <div>
