@@ -1,5 +1,6 @@
 .edit-form {
   width: 100%;
+  animation: showFields 1s ease-in-out;
 
   &__content {
     width: 100%;
@@ -14,5 +15,14 @@
     display: flex;
     justify-content: flex-end;
     margin-top: 10px;
+  }
+}
+
+@keyframes showFields {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
