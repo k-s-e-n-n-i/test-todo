@@ -273,7 +273,17 @@ class ServiceRedux {
     const arrByTitle = tasks.filter((x) => x.title.includes(search));
     const arrByNumber = tasks.filter((x) => x.numberTask.toString().includes(search));
 
-    return [...arrByTitle, ...arrByNumber];
+    const newArr = [...arrByTitle, ...arrByNumber].reduce((result: any, item) => {
+      const idxHasItem: number = result.indexOf(item);
+
+      if (idxHasItem !== -1) {
+        return result;
+      }
+
+      return [...result, item];
+    }, []);
+
+    return newArr;
   };
 
   addedComment = ({
