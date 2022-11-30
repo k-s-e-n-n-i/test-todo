@@ -13,13 +13,14 @@ const ModalForm = ({ textButton, content, saved, modal, modalUpdated, id }: Prop
       <Button onClick={() => modalUpdated(id)}>{textButton}</Button>
 
       {modal === id ? (
-        <div className="modal-form">
+        <form className="modal-form">
           <div className="modal-form__content">
             {content}
 
             <div className="modal-form__buttons">
               <Button onClick={() => modalUpdated('')}>Отменить</Button>
               <Button
+                type="submit"
                 onClick={() => {
                   modalUpdated('');
                   saved();
@@ -29,7 +30,7 @@ const ModalForm = ({ textButton, content, saved, modal, modalUpdated, id }: Prop
               </Button>
             </div>
           </div>
-        </div>
+        </form>
       ) : null}
     </Fragment>
   );

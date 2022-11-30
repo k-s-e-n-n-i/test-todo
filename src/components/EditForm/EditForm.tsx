@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { Props } from './interfaces';
 import { Button } from '@mui/material';
 import './EditForm.scss';
@@ -10,11 +10,12 @@ const EditForm = ({ buttonText, contentEdit, contentMain, saved, deleted }: Prop
     <div className="edit-form">
       <div className="edit-form__content">
         {editMain ? (
-          <Fragment>
+          <form>
             {contentEdit}
             <div className="edit-form__buttons">
               <Button onClick={() => setEditMain(false)}>Отменить</Button>
               <Button
+                type="submit"
                 onClick={() => {
                   saved();
                   setEditMain(false);
@@ -23,7 +24,7 @@ const EditForm = ({ buttonText, contentEdit, contentMain, saved, deleted }: Prop
                 Сохранить
               </Button>
             </div>
-          </Fragment>
+          </form>
         ) : (
           <div className="edit-form__line">
             <div>{contentMain}</div>
