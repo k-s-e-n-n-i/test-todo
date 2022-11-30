@@ -55,6 +55,7 @@ const Dnd = ({ listColumns, getNewList }: Props) => {
 
   return (
     <div className="dnd">
+      <h3>C перетаскиванием (react-beautiful-dnd)</h3>
       <DragDropContext onDragEnd={(result) => onDragEnd(result, columns, setColumns)}>
         <div className="dnd__container">
           <TaskColumnStyles>

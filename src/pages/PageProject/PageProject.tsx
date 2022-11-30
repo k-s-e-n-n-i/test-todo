@@ -15,6 +15,7 @@ import { Input } from '@mui/material';
 import Dnd from '../../components/Dnd/Dnd';
 import { IFDndColumn } from '../../components/Dnd/interfaces';
 import { Statutes, StatutesTexts } from '../../redux/services/Constants';
+import TableTasks from '../../components/TableTasks/TableTasks';
 
 const PageProject = ({ currentProject, projects, projectsLoaded, currentProjectUpdated }: Props) => {
   Service.definedCurrentProject({ projects, currentProjectUpdated });
@@ -88,11 +89,7 @@ const PageProject = ({ currentProject, projects, projectsLoaded, currentProjectU
 
         {listTask.length !== 0 ? <Dnd listColumns={listTask} getNewList={setListTask} /> : null}
 
-        <div className="page-project__tasks">
-          {filterTasks.map((task, i) => (
-            <Task task={task} key={i} />
-          ))}
-        </div>
+        <TableTasks listColumns={listTask} getNewList={setListTask} />
       </div>
     );
   }
