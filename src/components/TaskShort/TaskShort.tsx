@@ -7,7 +7,6 @@ import WithStore from '../../redux/hoc/WithStore';
 import { MapStateToProps } from '../../redux/services/MapStateToProps';
 import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
 import moment from 'moment';
-import { Button } from '@mui/material';
 
 const TaskShort = ({ task, projects, currentProjectUpdated, modalUpdated }: Props) => {
   const { numberTask, title, dateEnd, priority } = task;
@@ -22,7 +21,9 @@ const TaskShort = ({ task, projects, currentProjectUpdated, modalUpdated }: Prop
         <span>{dateEnd ? moment(dateEnd).format('DD.MM.YYYY') : 'не указана'}</span>
       </p>
 
-      <Button onClick={() => modalUpdated(task.id)}>Просмотр</Button>
+      <button className="my-button" type="button" onClick={() => modalUpdated(task.id)}>
+        Просмотр
+      </button>
     </div>
   );
 };

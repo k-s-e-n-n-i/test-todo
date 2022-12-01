@@ -1,6 +1,5 @@
 import React from 'react';
 import { Props } from './interfaces';
-import { Button } from '@mui/material';
 import './EditForm.scss';
 import WithStore from '../../redux/hoc/WithStore';
 import { connect } from 'react-redux';
@@ -25,15 +24,18 @@ const EditForm = ({
           <form>
             {contentEdit}
             <div className="edit-form__buttons">
-              <Button
+              <button
+                className="my-button"
+                type="button"
                 onClick={() => {
                   idEditFieldUpdated(0);
                   canceled();
                 }}
               >
                 Отменить
-              </Button>
-              <Button
+              </button>
+              <button
+                className="my-button"
                 type="submit"
                 onClick={() => {
                   idEditFieldUpdated(0);
@@ -41,7 +43,7 @@ const EditForm = ({
                 }}
               >
                 Сохранить
-              </Button>
+              </button>
             </div>
           </form>
         ) : (

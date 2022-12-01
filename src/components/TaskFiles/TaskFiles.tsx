@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import WithStore from '../../redux/hoc/WithStore';
 import { MapStateToProps } from '../../redux/services/MapStateToProps';
 import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
-import { Button } from '@mui/material';
 import FileUpload from '../FileUpload/FileUpload';
 import { IFFile } from '../../redux/initState/InterfacesState';
 import AddForm from '../AddForm/AddForm';
@@ -64,7 +63,9 @@ const TaskFiles = ({ task, currentProject, projects, projectsLoaded }: Props) =>
         />
       ) : null}
 
-      <Button onClick={() => setShowInputFile(true)}>Добавить</Button>
+      <button className="my-button" type="button" onClick={() => setShowInputFile(true)}>
+        Добавить
+      </button>
     </div>
   );
 };

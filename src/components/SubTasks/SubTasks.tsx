@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import WithStore from '../../redux/hoc/WithStore';
 import { MapStateToProps } from '../../redux/services/MapStateToProps';
 import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
-import { Checkbox, FormControlLabel, Button } from '@mui/material';
+import { Checkbox, FormControlLabel } from '@mui/material';
 import EditForm from '../EditForm/EditForm';
 import AddForm from '../AddForm/AddForm';
 import Input from '../Input/Input';
@@ -113,7 +113,9 @@ const SubTasks = ({ task, currentProject, projects, projectsLoaded, idEditFieldU
         />
       ) : null}
 
-      <Button
+      <button
+        type="button"
+        className="my-button"
         onClick={() => {
           setShowField(true);
           setNewSubTask('');
@@ -121,7 +123,7 @@ const SubTasks = ({ task, currentProject, projects, projectsLoaded, idEditFieldU
         }}
       >
         Добавить
-      </Button>
+      </button>
     </div>
   );
 };

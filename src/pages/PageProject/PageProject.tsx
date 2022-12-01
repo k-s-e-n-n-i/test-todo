@@ -10,7 +10,6 @@ import ModalForm from '../../components/ModalForm/ModalForm';
 import { IFProject, IFTask } from '../../redux/initState/InterfacesState';
 import ContentFormTask from '../../components/ContentFormTask/ContentFormTask';
 import { Service } from '../../redux/services/ServiceRedux';
-import { Button } from '@mui/material';
 import Dnd from '../../components/Dnd/Dnd';
 import { IFDndColumn } from '../../components/Dnd/interfaces';
 import { Statutes, StatutesTexts } from '../../redux/services/Constants';
@@ -108,10 +107,9 @@ const PageProject = ({
                 <Task task={filterTasks.find((x) => x.id === modal)} />
 
                 <div className="modal-form__buttons">
-                  <Button onClick={() => modalUpdated('')}>Отменить</Button>
-                  <Button type="submit" onClick={() => modalUpdated('')}>
-                    Сохранить
-                  </Button>
+                  <button className="my-button" type="button" onClick={() => modalUpdated('')}>
+                    ok
+                  </button>
                 </div>
               </div>
             </form>

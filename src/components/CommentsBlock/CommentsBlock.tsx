@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Props } from './interfaces';
 import './CommentsBlock.scss';
-import { Button } from '@mui/material';
 import { Service } from '../../redux/services/ServiceRedux';
 import WithStore from '../../redux/hoc/WithStore';
 import { connect } from 'react-redux';
@@ -113,7 +112,9 @@ const CommentsBlock = ({ comments, commentsLoaded, currentProject, idTask }: Pro
         <div key={i}>{commentBlock(item)}</div>
       ))}
 
-      <Button onClick={() => setShowFormAddComment(1)}>Добавить комментарий</Button>
+      <button type="button" className="my-button" onClick={() => setShowFormAddComment(1)}>
+        Добавить комментарий
+      </button>
       {showFormAddComment === 1 ? formAddComment(1) : null}
     </div>
   );

@@ -9,7 +9,6 @@ import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
 import moment from 'moment';
 import TimeInWork from '../TimeInWork/TimeInWork';
 import EditForm from '../EditForm/EditForm';
-import { Button } from '@mui/material';
 import AddForm from '../AddForm/AddForm';
 
 const TaskTime = ({ task, currentProject, projects, projectsLoaded, idEditFieldUpdated }: Props) => {
@@ -82,15 +81,16 @@ const TaskTime = ({ task, currentProject, projects, projectsLoaded, idEditFieldU
         />
       ) : null}
 
-      <Button
+      <button
+        className="my-button"
+        type="button"
         onClick={() => {
           setShowField(true);
-
           idEditFieldUpdated(0);
         }}
       >
         Добавить
-      </Button>
+      </button>
     </div>
   );
 };
