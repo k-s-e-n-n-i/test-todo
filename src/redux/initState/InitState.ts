@@ -5,4 +5,5 @@ export const ProjectState: IFProjectState = {
   currentProject: undefined,
   comments: [],
   modal: '',
+  idEditField: 0,
 };

@@ -1,5 +1,11 @@
 import { bindActionCreators } from 'redux';
-import { CommentsLoaded, CurrentProjectUpdated, ModalUpdated, ProjectsLoaded } from '../actions/Actions';
+import {
+  CommentsLoaded,
+  CurrentProjectUpdated,
+  IdEditFieldUpdated,
+  ModalUpdated,
+  ProjectsLoaded,
+} from '../actions/Actions';
 
 export const MapDispatchToProps = (dispatch: any) => {
   return bindActionCreators(
@@ -8,6 +14,7 @@ export const MapDispatchToProps = (dispatch: any) => {
       currentProjectUpdated: CurrentProjectUpdated,
       commentsLoaded: CommentsLoaded,
       modalUpdated: ModalUpdated,
+      idEditFieldUpdated: IdEditFieldUpdated,
     },
     dispatch
   );

@@ -3,6 +3,7 @@ export interface IFProjectState {
   currentProject: IFProject | undefined;
   comments: IFComment[];
   modal: string;
+  idEditField: number;
 }
 
 export interface IFProject {
