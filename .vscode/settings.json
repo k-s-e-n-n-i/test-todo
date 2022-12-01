@@ -1,0 +1,11 @@
+{
+  "editor.renderWhitespace": "boundary",
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.formatOnType": true,
+  "editor.wordWrapColumn": 110,
+  "breadcrumbs.enabled": true,
+  "prettier.semi": true,
+  "prettier.singleQuote": true
+}

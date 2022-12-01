@@ -1,0 +1,13 @@
+{
+  "env": {
+    "es6": true
+  },
+  "rules": {
+    // "no-unused-vars": ["error", { "vars": "all", "args": "all", "ignoreRestSiblings": false }]
+  },
+  "plugins": ["prettier", "react"],
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "extends": ["plugin:react/recommended"]
+}
