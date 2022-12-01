@@ -1,12 +1,12 @@
 .task {
   @media screen and (max-width: 900px) {
-    &__main-block {
+    &__info {
       grid-template-columns: 50% 50%;
     }
   }
 
   @media screen and (max-width: 640px) {
-    &__main-block {
+    &__info {
       display: flex;
       flex-direction: column;
       row-gap: 20px;

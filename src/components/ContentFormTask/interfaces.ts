@@ -1,4 +1,4 @@
-import { IFProject } from '../../redux/initState/InterfacesState';
+import { IFProject, IFTime } from '../../redux/initState/InterfacesState';
 
 export interface Props {
   project: IFProject;
@@ -12,9 +12,6 @@ export interface IFStateTask {
   description: string;
   dateEnd: string | null;
   status: string;
-  time: {
-    hour: string;
-    minutes: string;
-  };
+  time: IFTime[];
   priority: string;
 }

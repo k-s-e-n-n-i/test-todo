@@ -31,6 +31,7 @@ const PageListProjects = ({ projects, projectsLoaded, currentProjectUpdated }: P
       {projects.map((proj, i) => (
         <EditForm
           key={i}
+          id={proj.id}
           buttonText="Ред"
           contentMain={
             <Link to={`/project-${proj.id}`} onClick={() => currentProjectUpdated(proj)}>

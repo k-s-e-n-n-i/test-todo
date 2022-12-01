@@ -4,42 +4,31 @@ import { Service } from '../../redux/services/ServiceRedux';
 import ContentFormTask from '../ContentFormTask/ContentFormTask';
 import './Task.scss';
 import './Task-media.scss';
-import { IFFile, IFProject, IFTime } from '../../redux/initState/InterfacesState';
+import { IFFile, IFProject } from '../../redux/initState/InterfacesState';
 import { connect } from 'react-redux';
 import WithStore from '../../redux/hoc/WithStore';
 import { MapStateToProps } from '../../redux/services/MapStateToProps';
 import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
 import { PriorityTexts, Statutes, StatutesTexts } from '../../redux/services/Constants';
 import moment from 'moment';
-import TimeInWork from '../TimeInWork/TimeInWork';
-import { Button, Checkbox, FormControlLabel, Input } from '@mui/material';
+import { Button, Checkbox, FormControlLabel } from '@mui/material';
 import FileUpload from '../FileUpload/FileUpload';
 import CommentsBlock from '../CommentsBlock/CommentsBlock';
 import EditForm from '../EditForm/EditForm';
-import EditField from '../EditField/EditField';
 import SubTasks from '../SubTasks/SubTasks';
 import TaskTime from '../TaskTime/TaskTime';
 
 const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUpdated }: Props) => {
-  const { id, numberTask, title, date, description, status, time, dateEnd, priority, subTasks, files } = task;
+  const { id, numberTask, title, date, description, status, time, dateEnd, priority, files } = task;
   Service.definedCurrentProject({ projects, currentProjectUpdated });
 
   const [updatedProject, setUpdatedProject] = useState<IFProject>();
-  const [addTime, setAddTime] = useState<IFTime>();
-  const [addSubTask, setAddSubTask] = useState('');
   const [addFiles, setFiles] = useState<IFFile[] | null>(null);
-
-  let sumMin: any = 0;
-  time.forEach(({ timeStart, timeEnd }, i) => {
-    sumMin += (new Date(timeEnd).getTime() - new Date(timeStart).getTime()) / 1000 / 60;
-  });
-  const hour = Math.floor(sumMin / 60);
-  const minutes = Math.floor(sumMin - hour * 60);
 
   return (
     <div className={`task ${status === Statutes.Done ? 'task__done' : ''}`}>
       <h2>{`${numberTask}. ${title}`}</h2>
-      <div className="task__">
+      <div>
         <EditForm
           buttonText="Редактировать основную информацию"
           saved={() => Service.savedTask({ projects, projectsLoaded, currentProject, updatedProject })}
@@ -93,7 +82,7 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
       <h3>Описание: </h3>
       <p dangerouslySetInnerHTML={{ __html: description }}></p>
 
-      <div className="task__main-block">
+      <div className="task__info">
         <TaskTime task={task} />
 
         <SubTasks task={task} />

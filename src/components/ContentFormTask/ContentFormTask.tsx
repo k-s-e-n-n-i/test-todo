@@ -20,7 +20,7 @@ const defaultDataForm: IFStateTask = {
   description: '',
   dateEnd: null,
   status: '0',
-  time: { hour: '', minutes: '' },
+  time: [],
   priority: '0',
 };
 

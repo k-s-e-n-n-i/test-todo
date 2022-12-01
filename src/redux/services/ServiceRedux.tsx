@@ -386,7 +386,6 @@ class ServiceRedux {
         ];
 
         projectsLoaded(result);
-        console.log(result);
         localStorage.setItem('TODO-list-projects', JSON.stringify(result));
       }
     }
