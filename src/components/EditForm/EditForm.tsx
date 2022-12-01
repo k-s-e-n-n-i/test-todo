@@ -1,24 +1,42 @@
-import React, { useState } from 'react';
 import { Props } from './interfaces';
 import { Button } from '@mui/material';
 import './EditForm.scss';
+import WithStore from '../../redux/hoc/WithStore';
+import { connect } from 'react-redux';
+import { MapStateToProps } from '../../redux/services/MapStateToProps';
+import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
 
-const EditForm = ({ buttonText, contentEdit, contentMain, saved, deleted }: Props) => {
-  const [editMain, setEditMain] = useState(false);
-
+const EditForm = ({
+  buttonText,
+  contentEdit,
+  contentMain,
+  deleted,
+  saved,
+  canceled,
+  id,
+  idEditField,
+  idEditFieldUpdated,
+}: Props) => {
   return (
     <div className="edit-form">
       <div className="edit-form__content">
-        {editMain ? (
+        {id === idEditField ? (
           <form>
             {contentEdit}
             <div className="edit-form__buttons">
-              <Button onClick={() => setEditMain(false)}>Отменить</Button>
+              <Button
+                onClick={() => {
+                  idEditFieldUpdated(0);
+                  canceled();
+                }}
+              >
+                Отменить
+              </Button>
               <Button
                 type="submit"
                 onClick={() => {
+                  idEditFieldUpdated(0);
                   saved();
-                  setEditMain(false);
                 }}
               >
                 Сохранить
@@ -28,8 +46,8 @@ const EditForm = ({ buttonText, contentEdit, contentMain, saved, deleted }: Prop
         ) : (
           <div className="edit-form__line">
             <div>{contentMain}</div>
-            <Button onClick={() => setEditMain(true)}>{buttonText}</Button>
-            {deleted ? <Button onClick={() => deleted()}>X</Button> : null}
+            <Button onClick={() => idEditFieldUpdated(id)}>{buttonText}</Button>
+            {deleted ? <Button onClick={deleted}>X</Button> : null}
           </div>
         )}
       </div>
@@ -37,4 +55,4 @@ const EditForm = ({ buttonText, contentEdit, contentMain, saved, deleted }: Prop
   );
 };
 
-export default EditForm;
+export default WithStore()(connect(MapStateToProps, MapDispatchToProps)(EditForm));

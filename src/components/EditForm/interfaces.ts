@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 export interface Props {
   buttonText: string;
@@ -6,4 +6,8 @@ export interface Props {
   contentMain: ReactElement | null;
   saved: any;
   deleted?: any;
+  canceled: any;
+  id?: number;
+  idEditField: number;
+  idEditFieldUpdated: any;
 }
