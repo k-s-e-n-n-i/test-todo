@@ -18,9 +18,8 @@ import TaskTime from '../TaskTime/TaskTime';
 import TaskFiles from '../TaskFiles/TaskFiles';
 import Checkbox from '../Checkbox/Checkbox';
 
-const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUpdated }: Props) => {
+const Task = ({ task, currentProject, projects, projectsLoaded }: Props) => {
   const { id, numberTask, title, date, description, status, time, dateEnd, priority } = task;
-  Service.definedCurrentProject({ projects, currentProjectUpdated });
 
   const [updatedProject, setUpdatedProject] = useState<IFProject>();
 

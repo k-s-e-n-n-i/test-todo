@@ -8,9 +8,8 @@ import { MapStateToProps } from '../../redux/services/MapStateToProps';
 import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
 import moment from 'moment';
 
-const TaskShort = ({ task, projects, currentProjectUpdated, modalUpdated }: Props) => {
+const TaskShort = ({ task, modalUpdated }: Props) => {
   const { numberTask, title, dateEnd, priority } = task;
-  Service.definedCurrentProject({ projects, currentProjectUpdated });
 
   return (
     <div className={`task-short`}>

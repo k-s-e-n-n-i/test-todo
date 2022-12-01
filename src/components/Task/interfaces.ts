@@ -5,5 +5,4 @@ export interface Props {
   currentProject: IFProject | undefined;
   projects: IFProject[];
   projectsLoaded: any;
-  currentProjectUpdated: any;
 }
