@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { Props } from './interfaces';
-import { Button } from '@mui/material';
 import './ModalForm.scss';
 import WithStore from '../../redux/hoc/WithStore';
 import { connect } from 'react-redux';
@@ -10,7 +9,9 @@ import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
 const ModalForm = ({ textButton, content, saved, modal, modalUpdated, id }: Props) => {
   return (
     <Fragment>
-      <Button onClick={() => modalUpdated(id)}>{textButton}</Button>
+      <button className="my-button" onClick={() => modalUpdated(id)}>
+        {textButton}
+      </button>
 
       {modal === id ? (
         <Fragment>
@@ -20,8 +21,11 @@ const ModalForm = ({ textButton, content, saved, modal, modalUpdated, id }: Prop
               {content}
 
               <div className="modal-form__buttons">
-                <Button onClick={() => modalUpdated('')}>Отменить</Button>
-                <Button
+                <button className="my-button" onClick={() => modalUpdated('')}>
+                  Отменить
+                </button>
+                <button
+                  className="my-button"
                   type="submit"
                   onClick={() => {
                     modalUpdated('');
@@ -29,7 +33,7 @@ const ModalForm = ({ textButton, content, saved, modal, modalUpdated, id }: Prop
                   }}
                 >
                   Сохранить
-                </Button>
+                </button>
               </div>
             </div>
           </form>

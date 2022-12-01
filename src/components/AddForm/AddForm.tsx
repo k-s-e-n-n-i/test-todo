@@ -1,15 +1,17 @@
 import React from 'react';
 import { Props } from './interfaces';
 import './AddForm.scss';
-import { Button } from '@mui/material';
 
 const AddForm = ({ content, saved, canceled }: Props) => {
   return (
     <form className="add-form">
       {content}
       <div className="add-form__buttons">
-        <Button onClick={() => canceled()}>Отменить</Button>
-        <Button
+        <button className="my-button" onClick={() => canceled()}>
+          Отменить
+        </button>
+        <button
+          className="my-button"
           type="submit"
           onClick={(e) => {
             e.preventDefault();
@@ -17,7 +19,7 @@ const AddForm = ({ content, saved, canceled }: Props) => {
           }}
         >
           Сохранить
-        </Button>
+        </button>
       </div>
     </form>
   );

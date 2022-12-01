@@ -51,15 +51,17 @@ const CommentsBlock = ({ comments, commentsLoaded, currentProject, idTask }: Pro
         <p className="comments__symbols">{`Символов: ${1000 - addComment.length}`}</p>
 
         <div className="comments__buttons">
-          <Button
+          <button
+            className="my-button"
             onClick={() => {
               setAddComment('');
               setShowFormAddComment(0);
             }}
           >
             Отменить
-          </Button>
-          <Button
+          </button>
+          <button
+            className="my-button"
             onClick={() => {
               Service.addedComment({
                 comments,
@@ -74,7 +76,7 @@ const CommentsBlock = ({ comments, commentsLoaded, currentProject, idTask }: Pro
             }}
           >
             Сохранить
-          </Button>
+          </button>
         </div>
       </div>
     );
