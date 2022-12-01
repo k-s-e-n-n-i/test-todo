@@ -2,7 +2,7 @@ import React from 'react';
 import { ProjectConsumer } from '../contexts/ProjectProvider';
 
 const WithStore = () => (Wrapper: any) => {
-  return (props: any) => {
+  return function Func(props: any) {
     return (
       <ProjectConsumer>
         {(service) => {
