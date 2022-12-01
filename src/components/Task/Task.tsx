@@ -17,6 +17,7 @@ import FileUpload from '../FileUpload/FileUpload';
 import CommentsBlock from '../CommentsBlock/CommentsBlock';
 import EditForm from '../EditForm/EditForm';
 import EditField from '../EditField/EditField';
+import SubTasks from '../SubTasks/SubTasks';
 
 const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUpdated }: Props) => {
   const { id, numberTask, title, date, description, status, time, dateEnd, priority, subTasks, files } = task;
@@ -146,79 +147,9 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
             }
           />
         </div>
-        <div className="task__column">
-          <h3>Подзадачи:</h3>
-          {subTasks.map(({ name, done, id }, i) => (
-            <EditForm
-              key={i}
-              buttonText="Ред"
-              contentMain={
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={done}
-                      onChange={(e) =>
-                        Service.setStatusSubTask({
-                          doneSubTask: e.target.checked,
-                          idSubTask: id,
-                          projects,
-                          currentProject,
-                          idTask: task.id,
-                          projectsLoaded,
-                        })
-                      }
-                    />
-                  }
-                  label={name}
-                />
-              }
-              contentEdit={<EditField name={name} addSubTask={addSubTask} setAddSubTask={setAddSubTask} />}
-              saved={() => {
-                Service.editField({
-                  keyData: 'subTasks',
-                  newData: { name: addSubTask, done, id },
-                  projects,
-                  currentProject,
-                  idTask: task.id,
-                  projectsLoaded,
-                  idxField: i,
-                });
-                setAddSubTask('');
-              }}
-              deleted={() =>
-                Service.deletedField({
-                  keyData: 'subTasks',
-                  projects,
-                  currentProject,
-                  idTask: task.id,
-                  projectsLoaded,
-                  idxField: i,
-                })
-              }
-            />
-          ))}
-          <EditForm
-            buttonText="Добавить"
-            contentMain={null}
-            contentEdit={
-              <Input
-                value={addSubTask}
-                placeholder="Наименование"
-                onChange={(e) => setAddSubTask(e.target.value)}
-              />
-            }
-            saved={() => {
-              Service.addedSubTask({
-                nameSubTask: addSubTask,
-                projects,
-                currentProject,
-                idTask: id,
-                projectsLoaded,
-              });
-              setAddSubTask('');
-            }}
-          />
-        </div>
+
+        <SubTasks task={task} />
+
         <div>
           <h3>Файлы:</h3>
           {files
