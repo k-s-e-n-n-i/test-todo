@@ -88,6 +88,7 @@ const SubTasks = ({ task, currentProject, projects, projectsLoaded, idEditFieldU
               idTask: task.id,
               projectsLoaded,
             });
+            setShowField(false);
             setNewSubTask('');
           }}
           canceled={() => {
