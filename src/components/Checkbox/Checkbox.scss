@@ -1,0 +1,14 @@
+.my-checkbox {
+  margin: 3px 0;
+  display: flex;
+  align-items: inherit;
+
+  &__input {
+    margin: 3px 5px 0 4px;
+    cursor: pointer;
+  }
+
+  &__label {
+    cursor: pointer;
+  }
+}

@@ -11,18 +11,15 @@
     margin: 20px 0;
   }
 
-  &__closed-task {
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-
   &__done {
     opacity: 0.5;
     pointer-events: none;
   }
 
-  &__checkbox-done {
+  &__closed-task {
+    position: absolute;
+    right: 0;
+    top: 0;
     pointer-events: all;
   }
 

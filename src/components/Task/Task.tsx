@@ -11,12 +11,12 @@ import { MapStateToProps } from '../../redux/services/MapStateToProps';
 import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
 import { PriorityTexts, Statutes, StatutesTexts } from '../../redux/services/Constants';
 import moment from 'moment';
-import { Checkbox, FormControlLabel } from '@mui/material';
 import CommentsBlock from '../CommentsBlock/CommentsBlock';
 import EditForm from '../EditForm/EditForm';
 import SubTasks from '../SubTasks/SubTasks';
 import TaskTime from '../TaskTime/TaskTime';
 import TaskFiles from '../TaskFiles/TaskFiles';
+import Checkbox from '../Checkbox/Checkbox';
 
 const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUpdated }: Props) => {
   const { id, numberTask, title, date, description, status, time, dateEnd, priority } = task;
@@ -56,23 +56,18 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
         />
 
         <div className="task__closed-task">
-          <FormControlLabel
-            className="task__checkbox-done"
-            control={
-              <Checkbox
-                checked={status === Statutes.Done}
-                onChange={() =>
-                  Service.setStatusTask({
-                    newStatus: status === Statutes.Done ? Statutes.Queue : Statutes.Done,
-                    projects,
-                    currentProject,
-                    idTask: task.id,
-                    projectsLoaded,
-                  })
-                }
-              />
-            }
+          <Checkbox
             label={status === Statutes.Done ? 'Задача завершена' : 'Завершить задачу'}
+            checked={status === Statutes.Done}
+            onChange={() =>
+              Service.setStatusTask({
+                newStatus: status === Statutes.Done ? Statutes.Queue : Statutes.Done,
+                projects,
+                currentProject,
+                idTask: task.id,
+                projectsLoaded,
+              })
+            }
           />
         </div>
       </div>

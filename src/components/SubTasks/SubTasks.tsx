@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import WithStore from '../../redux/hoc/WithStore';
 import { MapStateToProps } from '../../redux/services/MapStateToProps';
 import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
-import { Checkbox, FormControlLabel } from '@mui/material';
 import EditForm from '../EditForm/EditForm';
 import AddForm from '../AddForm/AddForm';
 import Input from '../Input/Input';
+import Checkbox from '../Checkbox/Checkbox';
 
 const SubTasks = ({ task, currentProject, projects, projectsLoaded, idEditFieldUpdated }: Props) => {
   const { subTasks } = task;
@@ -24,23 +24,19 @@ const SubTasks = ({ task, currentProject, projects, projectsLoaded, idEditFieldU
           key={i}
           id={id}
           contentMain={
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={done}
-                  onChange={(e) =>
-                    Service.setStatusSubTask({
-                      doneSubTask: e.target.checked,
-                      idSubTask: id,
-                      projects,
-                      currentProject,
-                      idTask: task.id,
-                      projectsLoaded,
-                    })
-                  }
-                />
-              }
+            <Checkbox
               label={name}
+              checked={done}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                Service.setStatusSubTask({
+                  doneSubTask: e.target.checked,
+                  idSubTask: id,
+                  projects,
+                  currentProject,
+                  idTask: task.id,
+                  projectsLoaded,
+                })
+              }
             />
           }
           contentEdit={
