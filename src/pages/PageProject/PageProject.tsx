@@ -15,6 +15,7 @@ import { IFDndColumn } from '../../components/Dnd/interfaces';
 import { Statutes, StatutesTexts } from '../../redux/services/Constants';
 import Task from '../../components/Task/Task';
 import Input from '../../components/Input/Input';
+import { Navigate } from 'react-router-dom';
 
 const PageProject = ({
   currentProject,
@@ -132,7 +133,7 @@ const PageProject = ({
     );
   }
 
-  return null;
+  return <Navigate to="/" />;
 };
 
 export default WithStore()(connect(MapStateToProps, MapDispatchToProps)(PageProject));

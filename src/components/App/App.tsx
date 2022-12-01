@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import PageListProjects from '../../pages/PageListProjects/PageListProjects';
 import PageProject from '../../pages/PageProject/PageProject';
 import { Service } from '../../redux/services/ServiceRedux';
@@ -23,6 +23,7 @@ const App = ({ projectsLoaded, commentsLoaded }: { projectsLoaded: any; comments
             <Routes>
               <Route path="/" element={<PageListProjects />} />
               <Route path="/project-:id" element={<PageProject />} />
+              <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </div>
         </div>
