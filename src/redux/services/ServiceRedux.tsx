@@ -23,13 +23,17 @@ class ServiceRedux {
     currentProjectUpdated: any;
   }) => {
     let project = projects[0];
-    const idProjectPage = /project-([0-9]*)/.exec(window.location.pathname);
+    const idProjectPage = /project-([0-9]*)$/.exec(window.location.pathname);
     if (idProjectPage) {
       const finedProject = projects.find((field) => field.id === Number(idProjectPage[1]));
       if (finedProject) {
         project = finedProject;
         currentProjectUpdated(finedProject);
+      } else {
+        currentProjectUpdated(undefined);
       }
+    } else {
+      currentProjectUpdated(undefined);
     }
 
     return project;

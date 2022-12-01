@@ -8,8 +8,17 @@ import WithStore from '../../redux/hoc/WithStore';
 import { MapStateToProps } from '../../redux/services/MapStateToProps';
 import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
 import './App.scss';
+import { IFProject } from '../../redux/initState/InterfacesState';
 
-const App = ({ projectsLoaded, commentsLoaded }: { projectsLoaded: any; commentsLoaded: any }) => {
+const App = ({
+  projectsLoaded,
+  commentsLoaded,
+  projects,
+}: {
+  projectsLoaded: any;
+  commentsLoaded: any;
+  projects: IFProject[];
+}) => {
   useEffect(() => {
     Service.getProjects(projectsLoaded);
     Service.getComments(commentsLoaded);
@@ -22,7 +31,7 @@ const App = ({ projectsLoaded, commentsLoaded }: { projectsLoaded: any; comments
           <div className="app-content">
             <Routes>
               <Route path="/" element={<PageListProjects />} />
-              <Route path="/project-:id" element={<PageProject />} />
+              <Route path="/project-:id" element={projects.length !== 0 ? <PageProject /> : null} />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </div>
