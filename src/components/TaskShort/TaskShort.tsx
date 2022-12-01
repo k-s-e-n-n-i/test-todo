@@ -21,7 +21,14 @@ const TaskShort = ({ task, projects, currentProjectUpdated, modalUpdated }: Prop
         <span>{dateEnd ? moment(dateEnd).format('DD.MM.YYYY') : 'не указана'}</span>
       </p>
 
-      <button className="my-button" type="button" onClick={() => modalUpdated(task.id)}>
+      <button
+        className="my-button"
+        type="button"
+        onClick={() => {
+          modalUpdated(task.id);
+          Service.bodyHidden();
+        }}
+      >
         Просмотр
       </button>
     </div>

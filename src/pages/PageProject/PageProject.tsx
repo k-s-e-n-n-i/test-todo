@@ -101,13 +101,26 @@ const PageProject = ({
 
         {modal !== '' && modal !== undefined ? (
           <Fragment>
-            <div className="modal-form-bg" onClick={() => modalUpdated('')}></div>
+            <div
+              className="modal-form-bg"
+              onClick={() => {
+                modalUpdated('');
+                Service.bodyAuto();
+              }}
+            ></div>
             <form className="modal-form">
               <div className="modal-form__content">
                 <Task task={filterTasks.find((x) => x.id === modal)} />
 
                 <div className="modal-form__buttons">
-                  <button className="my-button" type="button" onClick={() => modalUpdated('')}>
+                  <button
+                    className="my-button"
+                    type="button"
+                    onClick={() => {
+                      modalUpdated('');
+                      Service.bodyAuto();
+                    }}
+                  >
                     ok
                   </button>
                 </div>

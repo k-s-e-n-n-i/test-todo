@@ -9,7 +9,7 @@
   width: 1160px;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: calc(100vh - 20px);
   justify-content: space-between;
   padding: 0 20px 20px 20px;
 }

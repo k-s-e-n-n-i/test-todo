@@ -429,6 +429,13 @@ class ServiceRedux {
     projectsLoaded(result);
     localStorage.setItem('TODO-list-projects', JSON.stringify(result));
   };
+
+  bodyHidden = () => {
+    document.querySelector('body')?.classList.add('body-hidden');
+  };
+  bodyAuto = () => {
+    document.querySelector('body')?.classList.remove('body-hidden');
+  };
 }
 
 export const Service = new ServiceRedux();
