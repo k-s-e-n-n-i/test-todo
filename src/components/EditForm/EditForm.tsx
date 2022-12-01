@@ -46,8 +46,20 @@ const EditForm = ({
         ) : (
           <div className="edit-form__line">
             <div>{contentMain}</div>
-            <Button onClick={() => idEditFieldUpdated(id)}>{buttonText}</Button>
-            {deleted ? <Button onClick={deleted}>X</Button> : null}
+            <img
+              src={require('./img/edit.png')}
+              alt="редактировать"
+              className="edit-form__icon"
+              onClick={() => idEditFieldUpdated(id)}
+            ></img>
+            {deleted ? (
+              <img
+                src={require('./img/delete.png')}
+                alt="удалить"
+                className="edit-form__icon"
+                onClick={deleted}
+              ></img>
+            ) : null}
           </div>
         )}
       </div>

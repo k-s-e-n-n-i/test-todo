@@ -4,6 +4,16 @@
   border: 1px solid #eee;
   border-width: 1px 0 0 0;
 
+  &__title {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+  }
+
+  &__icon {
+    cursor: pointer;
+  }
+
   &__item {
     padding: 10px 0;
   }

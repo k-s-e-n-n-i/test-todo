@@ -8,7 +8,13 @@
 
   &__line {
     display: grid;
-    grid-template-columns: 70% auto auto;
+    grid-template-columns: auto 35px 35px;
+    align-items: center;
+  }
+
+  &__icon {
+    justify-self: center;
+    cursor: pointer;
   }
 
   &__buttons {

@@ -27,13 +27,14 @@ const CommentsBlock = ({ comments, commentsLoaded, currentProject, idTask }: Pro
 
   const buttonAddComment = (idParent: number) => {
     return (
-      <Button
+      <img
+        src={require('./img/add-comment.png')}
+        alt="Добавить комментарий"
+        className="comments__icon"
         onClick={() => {
           setShowFormAddComment(idParent);
         }}
-      >
-        Добавить комментарий
-      </Button>
+      ></img>
     );
   };
 
@@ -85,8 +86,10 @@ const CommentsBlock = ({ comments, commentsLoaded, currentProject, idTask }: Pro
 
     return (
       <div className="comments__item">
-        <span>{moment(date).format('HH:mm:ss DD.MM.YYYY')}</span>
-        {buttonAddComment(id)}
+        <div className="comments__title">
+          <span>{moment(date).format('HH:mm:ss DD.MM.YYYY')}</span>
+          {buttonAddComment(id)}
+        </div>
         <p>{text}</p>
         {showFormAddComment === id ? formAddComment(id) : null}
 
@@ -107,7 +110,8 @@ const CommentsBlock = ({ comments, commentsLoaded, currentProject, idTask }: Pro
       {inTask0.map((item, i) => (
         <div key={i}>{commentBlock(item)}</div>
       ))}
-      {buttonAddComment(1)}
+
+      <Button onClick={() => setShowFormAddComment(1)}>Добавить комментарий</Button>
       {showFormAddComment === 1 ? formAddComment(1) : null}
     </div>
   );
