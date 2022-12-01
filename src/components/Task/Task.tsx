@@ -17,6 +17,7 @@ import CommentsBlock from '../CommentsBlock/CommentsBlock';
 import EditForm from '../EditForm/EditForm';
 import SubTasks from '../SubTasks/SubTasks';
 import TaskTime from '../TaskTime/TaskTime';
+import TaskFiles from '../TaskFiles/TaskFiles';
 
 const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUpdated }: Props) => {
   const { id, numberTask, title, date, description, status, time, dateEnd, priority, files } = task;
@@ -87,49 +88,7 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
 
         <SubTasks task={task} />
 
-        <div>
-          <h3>Файлы:</h3>
-          {files
-            ? files.map((item, i) => (
-                <Fragment key={i}>
-                  <div>
-                    <a href={item.file} download={item.nameFile} target="_blank" rel="noreferrer">
-                      {item.nameFile}
-                    </a>
-                    <Button
-                      onClick={() =>
-                        Service.deletedField({
-                          keyData: 'files',
-                          projects,
-                          currentProject,
-                          idTask: id,
-                          projectsLoaded,
-                          idxField: i,
-                        })
-                      }
-                    >
-                      X
-                    </Button>
-                  </div>
-                </Fragment>
-              ))
-            : null}
-          <EditForm
-            buttonText="Загрузить"
-            contentMain={null}
-            contentEdit={<FileUpload setFiles={setFiles} />}
-            saved={() => {
-              Service.uploadFiles({
-                addFiles,
-                projects,
-                currentProject,
-                idTask: id,
-                projectsLoaded,
-              });
-              setFiles(null);
-            }}
-          />
-        </div>
+        <TaskFiles task={task} />
       </div>
 
       <CommentsBlock idTask={id} />

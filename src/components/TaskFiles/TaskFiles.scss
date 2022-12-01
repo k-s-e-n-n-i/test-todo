@@ -1,0 +1,13 @@
+.task-files {
+  &__item {
+    display: grid;
+    grid-template-columns: auto 35px;
+    align-items: center;
+    margin: 10px 0;
+  }
+
+  &__icon {
+    justify-self: center;
+    cursor: pointer;
+  }
+}

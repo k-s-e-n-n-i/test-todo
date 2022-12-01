@@ -21,6 +21,7 @@ class FileUpload extends React.Component<Props, State> {
     return (
       <div className="file-upload">
         <div>
+          <p>Готовы к сохранению:</p>
           {files?.map((item, i) => (
             <div className="file-upload__line" key={i}>
               <a href={item.file} download={item.nameFile} target="_blank" rel="noreferrer">
