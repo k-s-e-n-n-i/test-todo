@@ -19,28 +19,30 @@ const TaskFiles = ({ task, currentProject, projects, projectsLoaded }: Props) =>
   return (
     <div className="task-files">
       <h3>Файлы:</h3>
-      {files.map((item, i) => (
-        <div key={i} className="task-files__item">
-          <a href={item.file} download={item.nameFile} target="_blank" rel="noreferrer">
-            {item.nameFile}
-          </a>
-          <img
-            src={require('./img/delete.png')}
-            alt="удалить"
-            className="task-files__icon"
-            onClick={() =>
-              Service.deletedField({
-                keyData: 'files',
-                projects,
-                currentProject,
-                idTask: id,
-                projectsLoaded,
-                idxField: i,
-              })
-            }
-          ></img>
-        </div>
-      ))}
+      {files.map((item, i) => {
+        return item.file ? (
+          <div key={i} className="task-files__item">
+            <a href={item.file} download={item.nameFile} target="_blank" rel="noreferrer">
+              {item.nameFile}
+            </a>
+            <img
+              src={require('./img/delete.png')}
+              alt="удалить"
+              className="task-files__icon"
+              onClick={() =>
+                Service.deletedField({
+                  keyData: 'files',
+                  projects,
+                  currentProject,
+                  idTask: id,
+                  projectsLoaded,
+                  idxField: i,
+                })
+              }
+            ></img>
+          </div>
+        ) : null;
+      })}
 
       {showInputFile ? (
         <AddForm

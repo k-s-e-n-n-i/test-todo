@@ -22,23 +22,25 @@ class FileUpload extends React.Component<Props, State> {
       <div className="file-upload">
         <div>
           <p>Готовы к сохранению:</p>
-          {files?.map((item, i) => (
-            <div className="file-upload__line" key={i}>
-              <a href={item.file} download={item.nameFile} target="_blank" rel="noreferrer">
-                {item.nameFile}
-              </a>
-              <div
-                className="file-upload__delete-files"
-                onClick={() => {
-                  const newFiles = files.filter((x) => x !== item);
-                  setFiles(newFiles);
-                  this.setState({ files: newFiles });
-                }}
-              >
-                удалить
+          {files?.map((item, i) => {
+            return item.file ? (
+              <div className="file-upload__line" key={i}>
+                <a href={item.file} download={item.nameFile} target="_blank" rel="noreferrer">
+                  {item.nameFile}
+                </a>
+                <div
+                  className="file-upload__delete-files"
+                  onClick={() => {
+                    const newFiles = files.filter((x) => x !== item);
+                    setFiles(newFiles);
+                    this.setState({ files: newFiles });
+                  }}
+                >
+                  удалить
+                </div>
               </div>
-            </div>
-          ))}
+            ) : null;
+          })}
 
           <label htmlFor="file-upload-input" className="file-upload__attach">
             Загрузить файлы
@@ -80,19 +82,25 @@ class FileUpload extends React.Component<Props, State> {
 
   reader({ file }: { file: File }) {
     const name = file.name;
-    return new Promise((resolve) => {
-      const reader = new FileReader();
 
-      reader.addEventListener('load', (e) => {
-        if (e.target && e.target.result) {
-          resolve({
-            nameFile: name,
-            file: e.target.result.toString(),
-          });
-        }
+    if (file.size < 1048576) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+
+        reader.addEventListener('load', (e) => {
+          if (e.target && e.target.result) {
+            resolve({
+              nameFile: name,
+              file: e.target.result.toString(),
+            });
+          }
+        });
+        reader.readAsDataURL(file);
       });
-      reader.readAsDataURL(file);
-    });
+    } else {
+      alert('Файл слишком большой, ограничение до 10 Мб');
+      return { file: undefined, nameFile: '' };
+    }
   }
 }
 
