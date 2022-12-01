@@ -8,12 +8,11 @@ import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
 import { Props } from './interfaces';
 import './PageListProjects.scss';
 
-import { Input } from '@mui/material';
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 import ModalForm from '../../components/ModalForm/ModalForm';
 import EditForm from '../../components/EditForm/EditForm';
-import EditField from '../../components/EditField/EditField';
 import { Service } from '../../redux/services/ServiceRedux';
+import Input from '../../components/Input/Input';
 
 const PageListProjects = ({ projects, projectsLoaded, currentProjectUpdated }: Props) => {
   const [nameNewProject, setNameNewProject] = useState('');
@@ -38,7 +37,15 @@ const PageListProjects = ({ projects, projectsLoaded, currentProjectUpdated }: P
             </Link>
           }
           contentEdit={
-            <EditField name={proj.name} addSubTask={nameNewProject} setAddSubTask={setNameNewProject} />
+            <Input
+              input={
+                <input
+                  value={nameNewProject}
+                  placeholder="Наименование"
+                  onChange={(e) => setNameNewProject(e.target.value)}
+                ></input>
+              }
+            />
           }
           saved={() => {
             Service.editProject({
@@ -61,7 +68,13 @@ const PageListProjects = ({ projects, projectsLoaded, currentProjectUpdated }: P
 
       <ModalForm
         textButton="Добавить проект"
-        content={<Input placeholder="Наименование" onChange={(e) => setNameNewProject(e.target.value)} />}
+        content={
+          <Input
+            input={
+              <input placeholder="Наименование" onChange={(e) => setNameNewProject(e.target.value)}></input>
+            }
+          />
+        }
         saved={() => savedProject()}
         id="addProject"
       />

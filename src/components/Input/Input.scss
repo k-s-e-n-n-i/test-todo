@@ -1,4 +1,5 @@
 .my-input {
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: 1rem;
   line-height: 1.4375em;
@@ -9,7 +10,6 @@
   display: inline-flex;
   align-items: center;
   position: relative;
-  width: 50%;
 
   &:before {
     border-bottom: 1px solid rgba(0, 0, 0, 0.42);

@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import WithStore from '../../redux/hoc/WithStore';
 import { MapStateToProps } from '../../redux/services/MapStateToProps';
 import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
-import { Checkbox, FormControlLabel, Button, Input } from '@mui/material';
+import { Checkbox, FormControlLabel, Button } from '@mui/material';
 import EditForm from '../EditForm/EditForm';
-import EditField from '../EditField/EditField';
 import AddForm from '../AddForm/AddForm';
+import Input from '../Input/Input';
 
 const SubTasks = ({ task, currentProject, projects, projectsLoaded, idEditFieldUpdated }: Props) => {
   const { subTasks } = task;
@@ -43,7 +43,18 @@ const SubTasks = ({ task, currentProject, projects, projectsLoaded, idEditFieldU
               label={name}
             />
           }
-          contentEdit={<EditField name={name} addSubTask={newSubTask} setAddSubTask={setNewSubTask} />}
+          contentEdit={
+            <Input
+              doFunc={() => setNewSubTask(name)}
+              input={
+                <input
+                  value={newSubTask}
+                  placeholder="Наименование"
+                  onChange={(e) => setNewSubTask(e.target.value)}
+                ></input>
+              }
+            />
+          }
           canceled={() => setNewSubTask('')}
           saved={() => {
             Service.editField({
@@ -74,9 +85,13 @@ const SubTasks = ({ task, currentProject, projects, projectsLoaded, idEditFieldU
         <AddForm
           content={
             <Input
-              value={newSubTask}
-              placeholder="Наименование"
-              onChange={(e) => setNewSubTask(e.target.value)}
+              input={
+                <input
+                  value={newSubTask}
+                  placeholder="Наименование"
+                  onChange={(e) => setNewSubTask(e.target.value)}
+                ></input>
+              }
             />
           }
           saved={() => {

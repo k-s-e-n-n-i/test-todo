@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import WithStore from '../../redux/hoc/WithStore';
 import { MapStateToProps } from '../../redux/services/MapStateToProps';
 import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
-import { Input, TextField, Select, MenuItem } from '@mui/material';
+import { TextField, Select, MenuItem } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers-pro';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
@@ -13,6 +13,7 @@ import { StatutesTexts, PriorityTexts } from '../../redux/services/Constants';
 import moment from 'moment';
 import { IFTask } from '../../redux/initState/InterfacesState';
 import { Editor } from '@tinymce/tinymce-react';
+import Input from '../Input/Input';
 
 const defaultDataForm: IFStateTask = {
   id: '0',
@@ -93,7 +94,12 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
     <div className="content-form-task">
       <div className="content-form-task__line">
         <label className="my-label">Заголовок:</label>
-        <Input value={title} placeholder="Заголовок" onChange={(e) => setTitle(e.target.value)} />
+        <Input
+          width="50%"
+          input={
+            <input value={title} placeholder="Заголовок" onChange={(e) => setTitle(e.target.value)}></input>
+          }
+        />
       </div>
 
       <div className="content-form-task__line">

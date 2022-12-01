@@ -10,11 +10,12 @@ import ModalForm from '../../components/ModalForm/ModalForm';
 import { IFProject, IFTask } from '../../redux/initState/InterfacesState';
 import ContentFormTask from '../../components/ContentFormTask/ContentFormTask';
 import { Service } from '../../redux/services/ServiceRedux';
-import { Button, Input } from '@mui/material';
+import { Button } from '@mui/material';
 import Dnd from '../../components/Dnd/Dnd';
 import { IFDndColumn } from '../../components/Dnd/interfaces';
 import { Statutes, StatutesTexts } from '../../redux/services/Constants';
 import Task from '../../components/Task/Task';
+import Input from '../../components/Input/Input';
 
 const PageProject = ({
   currentProject,
@@ -88,7 +89,11 @@ const PageProject = ({
             content={<ContentFormTask project={currentProject} setUpdatedProject={setUpdatedProject} />}
           />
 
-          <Input value={search} placeholder="Поиск" onChange={(e) => setSearch(e.target.value)} />
+          <Input
+            input={
+              <input value={search} placeholder="Поиск" onChange={(e) => setSearch(e.target.value)}></input>
+            }
+          />
         </div>
 
         {listTask.length !== 0 ? (
