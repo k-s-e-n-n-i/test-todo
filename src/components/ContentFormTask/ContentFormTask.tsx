@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import WithStore from '../../redux/hoc/WithStore';
 import { MapStateToProps } from '../../redux/services/MapStateToProps';
 import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
-import { Input, TextField, Select, MenuItem, InputLabel } from '@mui/material';
+import { Input, TextField, Select, MenuItem } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers-pro';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
@@ -92,12 +92,12 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
   return (
     <div className="content-form-task">
       <div className="content-form-task__line">
-        <InputLabel>Заголовок:</InputLabel>
+        <label className="my-label">Заголовок:</label>
         <Input value={title} placeholder="Заголовок" onChange={(e) => setTitle(e.target.value)} />
       </div>
 
       <div className="content-form-task__line">
-        <InputLabel>Статус:</InputLabel>
+        <label className="my-label">Статус:</label>
         <Select value={status} onChange={(e) => setStatus(e.target.value)}>
           <MenuItem value={0}>Queue</MenuItem>
           <MenuItem value={1}>Development</MenuItem>
@@ -107,7 +107,7 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
 
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'ru'}>
         <div className="content-form-task__line">
-          <InputLabel>Дата окончания:</InputLabel>
+          <label className="my-label">Дата окончания:</label>
           <DatePicker
             label="дата окончания"
             value={dateEndPicker}
@@ -123,12 +123,8 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
       </LocalizationProvider>
 
       <div className="content-form-task__line">
-        <InputLabel id="select-priority-label-from">Приоритет:</InputLabel>
-        <Select
-          labelId="select-priority-label-from"
-          value={priority}
-          onChange={(e) => setPriority(e.target.value)}
-        >
+        <label className="my-label">Приоритет:</label>
+        <Select value={priority} onChange={(e) => setPriority(e.target.value)}>
           <MenuItem value={0}>Низкий</MenuItem>
           <MenuItem value={1}>Средний</MenuItem>
           <MenuItem value={2}>Высокий</MenuItem>
@@ -136,7 +132,7 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
       </div>
 
       <div className="content-form-task__editor">
-        <InputLabel>Описание:</InputLabel>
+        <label className="my-label">Описание:</label>
         <Editor value={description} onEditorChange={(e) => setDescription(e)} />
       </div>
     </div>
