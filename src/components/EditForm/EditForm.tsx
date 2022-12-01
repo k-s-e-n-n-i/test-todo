@@ -10,6 +10,7 @@ import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
 const EditForm = ({
   contentEdit,
   contentMain,
+  edited,
   deleted,
   saved,
   canceled,
@@ -50,7 +51,10 @@ const EditForm = ({
               src={require('./img/edit.png')}
               alt="редактировать"
               className="edit-form__icon"
-              onClick={() => idEditFieldUpdated(id)}
+              onClick={() => {
+                idEditFieldUpdated(id);
+                edited();
+              }}
             ></img>
             {deleted ? (
               <img

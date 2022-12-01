@@ -32,6 +32,7 @@ const TaskTime = ({ task, currentProject, projects, projectsLoaded, idEditFieldU
         <EditForm
           key={i}
           id={id}
+          edited={() => setShowField(false)}
           deleted={() =>
             Service.deletedField({
               keyData: 'time',

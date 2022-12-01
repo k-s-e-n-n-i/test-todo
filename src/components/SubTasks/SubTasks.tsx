@@ -55,6 +55,7 @@ const SubTasks = ({ task, currentProject, projects, projectsLoaded, idEditFieldU
               }
             />
           }
+          edited={() => setShowField(false)}
           canceled={() => setNewSubTask('')}
           saved={() => {
             Service.editField({
