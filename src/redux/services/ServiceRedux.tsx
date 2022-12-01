@@ -262,8 +262,12 @@ class ServiceRedux {
           ...projects.slice(idx + 1),
         ];
 
-        projectsLoaded(result);
-        localStorage.setItem('TODO-list-projects', JSON.stringify(result));
+        try {
+          localStorage.setItem('TODO-list-projects', JSON.stringify(result));
+          projectsLoaded(result);
+        } catch (err) {
+          alert('Не удалось сохранить файлы большого размера');
+        }
       }
     }
   };
