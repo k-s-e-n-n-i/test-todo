@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Props } from './interfaces';
 import './Dnd.scss';
@@ -59,10 +59,10 @@ const Dnd = ({ columns, setColumns }: Props) => {
       <DragDropContext onDragEnd={(result) => onDragEnd(result, columns, setColumns)}>
         <div className="dnd__container">
           <TaskColumnStyles>
-            {Object.entries(columns).map(([columnId, column], index) => {
+            {Object.entries(columns).map(([columnId, column]) => {
               return (
                 <Droppable key={columnId.toString()} droppableId={columnId.toString()}>
-                  {(provided, snapshot) => (
+                  {(provided) => (
                     <div className="dnd__task-list" ref={provided.innerRef} {...provided.droppableProps}>
                       <p className="dnd__title">{column.title}</p>
                       {column.items.map((item, index) => (

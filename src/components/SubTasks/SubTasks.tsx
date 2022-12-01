@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Props } from './interfaces';
 import { Service } from '../../redux/services/ServiceRedux';
 import { connect } from 'react-redux';
@@ -23,7 +23,6 @@ const SubTasks = ({ task, currentProject, projects, projectsLoaded, idEditFieldU
         <EditForm
           key={i}
           id={id}
-          buttonText="Ред"
           contentMain={
             <FormControlLabel
               control={

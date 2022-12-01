@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { IFComment, IFFile, IFProject, IFSubTask, IFTask, IFTime } from '../initState/InterfacesState';
 
 class ServiceRedux {

@@ -32,7 +32,6 @@ const PageListProjects = ({ projects, projectsLoaded, currentProjectUpdated }: P
         <EditForm
           key={i}
           id={proj.id}
-          buttonText="Ред"
           contentMain={
             <Link to={`/project-${proj.id}`} onClick={() => currentProjectUpdated(proj)}>
               {proj.name}

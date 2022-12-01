@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Props } from './interfaces';
 import { Service } from '../../redux/services/ServiceRedux';
 import { IFTime } from '../../redux/initState/InterfacesState';
@@ -19,7 +19,7 @@ const TaskTime = ({ task, currentProject, projects, projectsLoaded, idEditFieldU
   const [showField, setShowField] = useState(false);
 
   let sumMin: any = 0;
-  time.forEach(({ timeStart, timeEnd }, i) => {
+  time.forEach(({ timeStart, timeEnd }) => {
     sumMin += (new Date(timeEnd).getTime() - new Date(timeStart).getTime()) / 1000 / 60;
   });
   const hour = Math.floor(sumMin / 60);
@@ -32,7 +32,6 @@ const TaskTime = ({ task, currentProject, projects, projectsLoaded, idEditFieldU
         <EditForm
           key={i}
           id={id}
-          buttonText="Ред"
           deleted={() =>
             Service.deletedField({
               keyData: 'time',

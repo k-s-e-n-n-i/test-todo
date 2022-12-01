@@ -1,3 +1,4 @@
+import React from 'react';
 import { Props } from './interfaces';
 import { Button } from '@mui/material';
 import './EditForm.scss';
@@ -7,7 +8,6 @@ import { MapStateToProps } from '../../redux/services/MapStateToProps';
 import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
 
 const EditForm = ({
-  buttonText,
   contentEdit,
   contentMain,
   deleted,

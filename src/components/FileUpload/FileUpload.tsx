@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Props, State } from './interfaces';
 import './FileUpload.scss';
 import { IFFile } from '../../redux/initState/InterfacesState';
@@ -67,7 +67,7 @@ class FileUpload extends React.Component<Props, State> {
       const files: IFFile[] = [];
       for (let i = 0; i < current.files.length; i++) {
         if (e.target.files !== null) {
-          files.push((await this.reader({ e, file: current.files[i] })) as IFFile);
+          files.push((await this.reader({ file: current.files[i] })) as IFFile);
         }
       }
       setFiles(files);
@@ -78,7 +78,7 @@ class FileUpload extends React.Component<Props, State> {
     }
   }
 
-  reader({ file, e }: { file: File; e: React.ChangeEvent<HTMLInputElement> }) {
+  reader({ file }: { file: File }) {
     const name = file.name;
     return new Promise((resolve) => {
       const reader = new FileReader();

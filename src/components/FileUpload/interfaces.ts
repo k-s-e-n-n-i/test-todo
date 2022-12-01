@@ -1,4 +1,3 @@
-import React from 'react';
 import { IFFile } from '../../redux/initState/InterfacesState';
 
 export interface Props {

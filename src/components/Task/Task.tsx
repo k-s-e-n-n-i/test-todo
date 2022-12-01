@@ -4,15 +4,14 @@ import { Service } from '../../redux/services/ServiceRedux';
 import ContentFormTask from '../ContentFormTask/ContentFormTask';
 import './Task.scss';
 import './Task-media.scss';
-import { IFFile, IFProject } from '../../redux/initState/InterfacesState';
+import { IFProject } from '../../redux/initState/InterfacesState';
 import { connect } from 'react-redux';
 import WithStore from '../../redux/hoc/WithStore';
 import { MapStateToProps } from '../../redux/services/MapStateToProps';
 import { MapDispatchToProps } from '../../redux/services/MapDispatchToProps';
 import { PriorityTexts, Statutes, StatutesTexts } from '../../redux/services/Constants';
 import moment from 'moment';
-import { Button, Checkbox, FormControlLabel } from '@mui/material';
-import FileUpload from '../FileUpload/FileUpload';
+import { Checkbox, FormControlLabel } from '@mui/material';
 import CommentsBlock from '../CommentsBlock/CommentsBlock';
 import EditForm from '../EditForm/EditForm';
 import SubTasks from '../SubTasks/SubTasks';
@@ -20,18 +19,16 @@ import TaskTime from '../TaskTime/TaskTime';
 import TaskFiles from '../TaskFiles/TaskFiles';
 
 const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUpdated }: Props) => {
-  const { id, numberTask, title, date, description, status, time, dateEnd, priority, files } = task;
+  const { id, numberTask, title, date, description, status, time, dateEnd, priority } = task;
   Service.definedCurrentProject({ projects, currentProjectUpdated });
 
   const [updatedProject, setUpdatedProject] = useState<IFProject>();
-  const [addFiles, setFiles] = useState<IFFile[] | null>(null);
 
   return (
     <div className={`task ${status === Statutes.Done ? 'task__done' : ''}`}>
       <h2>{`${numberTask}. ${title}`}</h2>
       <div>
         <EditForm
-          buttonText="Редактировать основную информацию"
           saved={() => Service.savedTask({ projects, projectsLoaded, currentProject, updatedProject })}
           contentMain={
             <Fragment>
@@ -64,7 +61,7 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
             control={
               <Checkbox
                 checked={status === Statutes.Done}
-                onChange={(e) =>
+                onChange={() =>
                   Service.setStatusTask({
                     newStatus: status === Statutes.Done ? Statutes.Queue : Statutes.Done,
                     projects,
