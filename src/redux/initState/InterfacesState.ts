@@ -28,6 +28,7 @@ export interface IFTask {
 }
 
 export interface IFTime {
+  id: number;
   timeStart: Date;
   timeEnd: Date;
 }

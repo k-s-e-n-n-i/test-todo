@@ -18,6 +18,7 @@ import CommentsBlock from '../CommentsBlock/CommentsBlock';
 import EditForm from '../EditForm/EditForm';
 import EditField from '../EditField/EditField';
 import SubTasks from '../SubTasks/SubTasks';
+import TaskTime from '../TaskTime/TaskTime';
 
 const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUpdated }: Props) => {
   const { id, numberTask, title, date, description, status, time, dateEnd, priority, subTasks, files } = task;
@@ -93,60 +94,7 @@ const Task = ({ task, currentProject, projects, projectsLoaded, currentProjectUp
       <p dangerouslySetInnerHTML={{ __html: description }}></p>
 
       <div className="task__main-block">
-        <div>
-          <h3>{`Время в работе: ${hour} ч. ${minutes} мин.`}</h3>
-          {time.map(({ timeStart, timeEnd }, i) => (
-            <EditForm
-              key={i}
-              buttonText="Ред"
-              deleted={() =>
-                Service.deletedField({
-                  keyData: 'time',
-                  projects,
-                  currentProject,
-                  idTask: id,
-                  projectsLoaded,
-                  idxField: i,
-                })
-              }
-              contentMain={
-                <p>
-                  {`с ${moment(timeStart).format('DD.MM.YY HH:mm')} до ${moment(timeEnd).format(
-                    'DD.MM.YY HH:mm'
-                  )}`}
-                </p>
-              }
-              contentEdit={
-                <TimeInWork setTime={setAddTime} editTimeStart={timeStart} editTimeEnd={timeEnd} />
-              }
-              saved={() => {
-                Service.editField({
-                  keyData: 'time',
-                  newData: addTime,
-                  projects,
-                  currentProject,
-                  idTask: id,
-                  projectsLoaded,
-                  idxField: i,
-                });
-              }}
-            />
-          ))}
-          <EditForm
-            buttonText="Добавить"
-            contentMain={null}
-            contentEdit={<TimeInWork setTime={setAddTime} />}
-            saved={() =>
-              Service.addedTimeInWork({
-                time: addTime,
-                projects,
-                currentProject,
-                idTask: id,
-                projectsLoaded,
-              })
-            }
-          />
-        </div>
+        <TaskTime task={task} />
 
         <SubTasks task={task} />
 

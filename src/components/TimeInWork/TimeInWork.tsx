@@ -16,6 +16,7 @@ const TimeInWork = ({ setTime, editTimeStart, editTimeEnd }: Props) => {
     setTime({
       timeStart,
       timeEnd,
+      id: Date.now(),
     });
   }, [timeStart, timeEnd]);
 

@@ -59,9 +59,8 @@ class ServiceRedux {
     projectsLoaded: any;
   }) => {
     if (time) {
-      const { timeStart, timeEnd } = time;
       this.updatedTask({
-        newData: { timeStart, timeEnd },
+        newData: time,
         keyData: 'time',
         projects,
         currentProject,
