@@ -1,4 +1,4 @@
-import { IFProject, IFProjectState } from './InterfacesState';
+import { IFProjectState } from './InterfacesState';
 
 export const ProjectState: IFProjectState = {
   projects: [],

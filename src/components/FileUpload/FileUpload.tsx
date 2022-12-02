@@ -98,7 +98,7 @@ class FileUpload extends React.Component<Props, State> {
         reader.readAsDataURL(file);
       });
     } else {
-      alert('Файл слишком большой, ограничение до 10 Мб');
+      alert('Файл слишком большой, ограничение до 1 Мб');
       return { file: undefined, nameFile: '' };
     }
   }

@@ -137,10 +137,8 @@ const ContentFormTask = ({ project, setUpdatedProject, editData }: Props) => {
         </Select>
       </div>
 
-      <div className="content-form-task__editor">
-        <label className="my-label">Описание:</label>
-        <Editor value={description} onEditorChange={(e) => setDescription(e)} />
-      </div>
+      <label className="my-label">Описание:</label>
+      <Editor value={description} onEditorChange={(e) => setDescription(e)} />
     </div>
   );
 };
